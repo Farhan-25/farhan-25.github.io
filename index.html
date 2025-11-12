@@ -557,16 +557,46 @@
           <h2 class="h2 article-title">CTF Writeups</h2>
         </header>
 
-        <section class="writeups-intro">
-          <p>
-            Welcome to my CTF writeups section!
-            I am uploading detailed writeups of the Capture The Flag (CTF) competitions I have participated in on my <a href="https://farhan-saiyed.gitbook.io/farhan-saiyed/" target="_blank">GitBook</a>
-          </p>
-        </section>
+        <div class="writeups-container">
+          <!-- Left Sidebar: CTF List -->
+          <aside class="writeups-sidebar writeups-sidebar-left">
+            <h3 class="sidebar-title">CTFs</h3>
+            <ul class="ctf-list" id="ctfList">
+              <!-- CTF items will be populated by JavaScript -->
+            </ul>
+          </aside>
+
+          <!-- Main Content: Writeup Display -->
+          <main class="writeup-content">
+            <div class="writeup-placeholder" id="writeupPlaceholder">
+              <div class="placeholder-content">
+                <ion-icon name="document-text-outline"></ion-icon>
+                <h3>Select a Challenge</h3>
+                <p>Choose a CTF from the left sidebar, then select a challenge from the right sidebar to view its writeup.</p>
+              </div>
+            </div>
+            <div class="writeup-display" id="writeupDisplay" style="display: none;">
+              <div class="writeup-header">
+                <h3 class="writeup-title" id="writeupTitle"></h3>
+                <div class="writeup-meta" id="writeupMeta"></div>
+              </div>
+              <div class="writeup-body" id="writeupBody"></div>
+            </div>
+          </main>
+
+          <!-- Right Sidebar: Challenge List -->
+          <aside class="writeups-sidebar writeups-sidebar-right">
+            <h3 class="sidebar-title">Challenges</h3>
+            <ul class="challenge-list" id="challengeList">
+              <li class="no-selection">Select a CTF to view challenges</li>
+            </ul>
+          </aside>
+        </div>
       </article>
     </div>
 
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
   <script src="script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
