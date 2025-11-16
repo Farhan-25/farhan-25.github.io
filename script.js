@@ -122,57 +122,103 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // CTF Writeups Functionality
-const ctfData = {
+// CTF configuration - just define which CTFs exist and their README paths
+const ctfConfig = {
     'PBCTF': {
         name: 'PBCTF',
-        challenges: [
-            {
-                name: 'Web Injection',
-                folder: 'web_injection',
-                writeup: 'CTF-Writeups/PBCTF/web_injection/writeup.md',
-                solves: 342
-            },
-            {
-                name: 'Crypto Easy',
-                folder: 'crypto_easy',
-                writeup: 'CTF-Writeups/PBCTF/crypto_easy/writeup.md',
-                solves: 567
-            }
-        ]
+        readme: 'CTF-Writeups/PBCTF/README.md'
     },
     'R3CTF': {
         name: 'R3CTF',
-        challenges: [
-            {
-                name: 'Web Challenge',
-                folder: 'web_challenge',
-                writeup: 'CTF-Writeups/R3CTF/web_challenge/writeup.md',
-                solves: 89
-            }
-        ]
+        readme: 'CTF-Writeups/R3CTF/README.md'
     },
     'HTB': {
         name: 'HTB',
-        challenges: [
-            {
-                name: 'Forensics Basic',
-                folder: 'forensics_basic',
-                writeup: 'CTF-Writeups/HTB/forensics_basic/writeup.md',
-                solves: 1234
-            }
-        ]
+        readme: 'CTF-Writeups/HTB/README.md'
+    },
+    'Platypwn 2025': {
+        name: 'Platypwn 2025',
+        readme: 'CTF-Writeups/Platypwn 2025/README.md'
     }
 };
+
+// Dynamic CTF data loaded from README files
+let ctfData = {};
 
 let selectedCTF = null;
 let selectedChallenge = null;
 
-function initCTFWriteups() {
-    const ctfList = document.getElementById('ctfList');
-    const challengeList = document.getElementById('challengeList');
+// Parse README markdown to extract challenges
+function parseChallengesFromReadme(readmeContent, ctfKey) {
+    const challenges = [];
+    const lines = readmeContent.split('\n');
     
-    if (!ctfList || !challengeList) return;
+    // Look for markdown list items with links: - [Challenge Name](./folder/writeup.md)
+    const challengePattern = /^-\s+\[(.+?)\]\(\.\/(.+?)\/writeup\.md\)/;
+    
+    for (const line of lines) {
+        const match = line.match(challengePattern);
+        if (match) {
+            const challengeName = match[1].trim();
+            const folder = match[2].trim();
+            const writeupPath = `CTF-Writeups/${ctfKey}/${folder}/writeup.md`;
+            
+            challenges.push({
+                name: challengeName,
+                folder: folder,
+                writeup: writeupPath,
+                solves: 0 // Default solves count, can be updated later if needed
+            });
+        }
+    }
+    
+    return challenges;
+}
 
+// Load CTF data from README files
+async function loadCTFData() {
+    const promises = Object.keys(ctfConfig).map(async (ctfKey) => {
+        const config = ctfConfig[ctfKey];
+        try {
+            const response = await fetch(config.readme);
+            if (!response.ok) {
+                console.warn(`Failed to load README for ${ctfKey}`);
+                return { key: ctfKey, challenges: [] };
+            }
+            const readmeContent = await response.text();
+            const challenges = parseChallengesFromReadme(readmeContent, ctfKey);
+            
+            return {
+                key: ctfKey,
+                data: {
+                    name: config.name,
+                    challenges: challenges
+                }
+            };
+        } catch (error) {
+            console.error(`Error loading ${ctfKey} README:`, error);
+            return { key: ctfKey, data: { name: config.name, challenges: [] } };
+        }
+    });
+    
+    const results = await Promise.all(promises);
+    
+    // Build ctfData object
+    results.forEach(result => {
+        ctfData[result.key] = result.data;
+    });
+    
+    // Now populate the CTF list
+    populateCTFList();
+}
+
+function populateCTFList() {
+    const ctfList = document.getElementById('ctfList');
+    if (!ctfList) return;
+    
+    // Clear existing list
+    ctfList.innerHTML = '';
+    
     // Populate CTF list
     Object.keys(ctfData).forEach(ctfKey => {
         const ctf = ctfData[ctfKey];
@@ -187,15 +233,32 @@ function initCTFWriteups() {
     });
 }
 
+function initCTFWriteups() {
+    const challengeList = document.getElementById('challengeList');
+    if (!challengeList) return;
+    
+    // Load CTF data dynamically from README files
+    loadCTFData();
+}
+
 function selectCTF(ctfKey) {
     selectedCTF = ctfKey;
     const ctf = ctfData[ctfKey];
+    
+    // Check if data is loaded
+    if (!ctf) {
+        console.warn(`CTF data for ${ctfKey} not loaded yet`);
+        return;
+    }
     
     // Update active CTF
     document.querySelectorAll('.ctf-item').forEach(item => {
         item.classList.remove('active');
     });
-    document.querySelector(`[data-ctf="${ctfKey}"]`).classList.add('active');
+    const activeButton = document.querySelector(`[data-ctf="${ctfKey}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
     
     // Populate challenge list
     const challengeList = document.getElementById('challengeList');
@@ -325,6 +388,10 @@ function loadWriteup(writeupPath) {
                 // Set body
                 if (writeupBody) {
                     writeupBody.innerHTML = html;
+                    // Fix relative image and video paths
+                    fixRelativePaths(writeupBody, writeupPath);
+                    // Process images and captions
+                    processImagesAndCaptions(writeupBody);
                     // Add copy buttons to code blocks
                     addCopyButtonsToCodeBlocks(writeupBody);
                 }
@@ -341,6 +408,77 @@ function loadWriteup(writeupPath) {
                 writeupBody.innerHTML = `<p style="color: var(--bittersweet-shimmer);">Error loading writeup: ${error.message}</p>`;
             }
         });
+}
+
+function fixRelativePaths(container, writeupPath) {
+    // Get the directory of the writeup file
+    const writeupDir = writeupPath.substring(0, writeupPath.lastIndexOf('/') + 1);
+    
+    // Fix image paths
+    const images = container.querySelectorAll('img');
+    images.forEach(img => {
+        const src = img.getAttribute('src');
+        if (src && !src.startsWith('http') && !src.startsWith('/') && !src.startsWith('data:')) {
+            // It's a relative path, make it relative to the writeup directory
+            img.setAttribute('src', writeupDir + src);
+        }
+    });
+    
+    // Fix video paths in video tags
+    const videos = container.querySelectorAll('video');
+    videos.forEach(video => {
+        const src = video.getAttribute('src');
+        if (src && !src.startsWith('http') && !src.startsWith('/') && !src.startsWith('data:')) {
+            video.setAttribute('src', writeupDir + src);
+        }
+    });
+    
+    // Fix video links (anchor tags pointing to video files)
+    const links = container.querySelectorAll('a');
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('/') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+            // Check if it's a video file
+            const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi'];
+            const isVideo = videoExtensions.some(ext => href.toLowerCase().endsWith(ext));
+            if (isVideo || href.includes('video') || href.includes('mp4')) {
+                link.setAttribute('href', writeupDir + href);
+            }
+        }
+    });
+}
+
+function processImagesAndCaptions(container) {
+    // Find all images
+    const images = container.querySelectorAll('img');
+    
+    images.forEach(img => {
+        // Find the parent paragraph
+        const imgParagraph = img.closest('p');
+        if (!imgParagraph) return;
+        
+        // Find the next sibling paragraph
+        let nextSibling = imgParagraph.nextElementSibling;
+        
+        // Look for the next paragraph that contains italic text (caption)
+        while (nextSibling) {
+            if (nextSibling.tagName === 'P') {
+                const emElement = nextSibling.querySelector('em');
+                if (emElement) {
+                    // Found a caption! Mark it for styling
+                    emElement.classList.add('image-caption');
+                    // Also mark the paragraph
+                    nextSibling.classList.add('image-caption-wrapper');
+                    break;
+                }
+            }
+            // If we hit a heading or other block element, stop looking
+            if (nextSibling.tagName && ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'PRE', 'UL', 'OL'].includes(nextSibling.tagName)) {
+                break;
+            }
+            nextSibling = nextSibling.nextElementSibling;
+        }
+    });
 }
 
 function addCopyButtonsToCodeBlocks(container) {

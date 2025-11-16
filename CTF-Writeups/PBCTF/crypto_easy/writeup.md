@@ -4,9 +4,18 @@
 **Difficulty:** Easy  
 **CTF:** PBCTF
 
-## Description
+## Challenge Description
 
-A simple cryptographic challenge that required decoding a base64-encoded message and applying a Caesar cipher.
+A simple cryptographic challenge that required decoding a base64-encoded message and applying a Caesar cipher. The challenge provides an encoded string that needs to be decoded using base64 first, then decrypted using a Caesar cipher shift to reveal the flag.
+
+![Challenge Interface](path/to/challenge_image.png)
+*Caption: Initial challenge interface showing the encoded message*
+
+## Files and Resources
+
+- [Decrypt Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/crypto_decrypt.py) - Complete Python decryption script
+- [Challenge Files](https://www.dropbox.com/s/example/crypto_challenge.zip) - Original challenge files and ciphertext
+- [Crypto Tools](https://drive.google.com/file/d/example456/view) - Collection of cryptography tools used
 
 ## Solution
 
@@ -26,6 +35,9 @@ encoded = "SGVsbG8gV29ybGQ="
 decoded = base64.b64decode(encoded)
 print(decoded.decode())  # Output: "Hello World"
 ```
+
+![Encoded Message](https://images.unsplash.com/photo-1516321318423-f06f85b504dc?w=800&h=600&fit=crop)
+*Caption: The original encoded message from the challenge*
 
 ### Step 2: Caesar Cipher
 
@@ -47,9 +59,15 @@ decrypted = caesar_decrypt(message, 3)
 print(decrypted)  # Output: "Ebiil Tloia"
 ```
 
+![Decoding Process](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop)
+*Caption: Step-by-step decoding process in Python*
+
 ### Step 3: Flag Extraction
 
 After reversing both encodings, the flag was revealed.
+
+![Final Flag](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop)
+*Caption: The decrypted flag displayed in the terminal*
 
 ## Flag
 
@@ -59,20 +77,7 @@ PBCTF{crypt0_1s_fun}
 
 ## Screenshots
 
-![Encoded Message](https://images.unsplash.com/photo-1516321318423-f06f85b504dc?w=800&h=600&fit=crop)
-*The original encoded message from the challenge*
-
-![Decoding Process](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop)
-*Step-by-step decoding process in Python*
-
-![Final Flag](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop)
-*The decrypted flag displayed in the terminal*
-
-## Files and Resources
-
-- [Decrypt Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/crypto_decrypt.py) - Complete Python decryption script
-- [Challenge Files](https://www.dropbox.com/s/example/crypto_challenge.zip) - Original challenge files and ciphertext
-- [Crypto Tools](https://drive.google.com/file/d/example456/view) - Collection of cryptography tools used
+> **Note:** You can place images inline within any step (as shown above) or group them here at the end. Use relative paths like `./images/screenshot1.png` or absolute URLs.
 
 ## References
 

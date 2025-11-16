@@ -1490,6 +1490,56 @@ body:has(.ctf-writeups.active) .writeup-content {
   border-radius: 8px;
   margin: 20px 0;
   border: 1px solid var(--jet);
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Style captions (italic text immediately after images) */
+.writeup-body img + em,
+.writeup-body img + p > em:first-child,
+.writeup-body p:has(img) + p > em:first-child,
+.writeup-body p:has(img) + p em:first-child,
+.writeup-body .image-caption {
+  display: block;
+  text-align: center;
+  font-size: var(--fs-8);
+  color: var(--light-gray-70);
+  font-style: italic;
+  margin-top: -15px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+/* Handle images wrapped in paragraphs */
+.writeup-body p:has(img) {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.writeup-body p:has(img) img {
+  margin-bottom: 0;
+}
+
+/* Style paragraph that follows image paragraph and contains italic text */
+.writeup-body p:has(img) + p {
+  margin-top: -10px;
+  text-align: center;
+}
+
+/* Style caption wrapper paragraph */
+.writeup-body .image-caption-wrapper {
+  margin-top: -10px !important;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.writeup-body .image-caption-wrapper em {
+  display: block;
+  text-align: center;
+  font-size: var(--fs-8);
+  color: var(--light-gray-70);
+  font-style: italic;
+  padding: 0 10px;
 }
 
 .writeup-body table {
