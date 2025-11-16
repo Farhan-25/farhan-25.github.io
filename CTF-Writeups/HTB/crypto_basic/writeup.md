@@ -4,6 +4,7 @@
 **Difficulty:** [Medium]  
 **CTF:** [HTB]
 
+<<<<<<< HEAD
 ## Challenge Description
 
 [Brief description about the challenge. Include what the challenge is about, what you need to do, and any important context. You can add images within the description to show the challenge interface, initial state, or any visual elements.]
@@ -16,6 +17,11 @@
 - [Script Name](https://github.com/your-username/repo/blob/main/script.py) - Description of what the script does
 - [File Name](https://www.dropbox.com/s/example/file.zip) - Description of the file
 - [Tool Collection](https://drive.google.com/file/d/example/view) - Description of the resource
+=======
+## Description
+
+[Breif Description About the challenge]
+>>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 
 ## Solution
 
@@ -79,6 +85,15 @@ CTF{flag_goes_here}
 ![Screenshot 2 Description](path/to/image2.png)
 *Caption explaining what the screenshot shows*
 
+<<<<<<< HEAD
+=======
+## Files and Resources
+
+- [Script Name](https://github.com/your-username/repo/blob/main/script.py) - Description of what the script does
+- [File Name](https://www.dropbox.com/s/example/file.zip) - Description of the file
+- [Tool Collection](https://drive.google.com/file/d/example/view) - Description of the resource
+
+>>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 ## Tools Used
 
 - `tool1` - What it was used for

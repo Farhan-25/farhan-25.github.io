@@ -4,6 +4,7 @@
 **Difficulty:** Easy  
 **CTF:** PBCTF
 
+<<<<<<< HEAD
 ## Challenge Description
 
 A simple cryptographic challenge that required decoding a base64-encoded message and applying a Caesar cipher. The challenge provides an encoded string that needs to be decoded using base64 first, then decrypted using a Caesar cipher shift to reveal the flag.
@@ -16,6 +17,11 @@ A simple cryptographic challenge that required decoding a base64-encoded message
 - [Decrypt Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/crypto_decrypt.py) - Complete Python decryption script
 - [Challenge Files](https://www.dropbox.com/s/example/crypto_challenge.zip) - Original challenge files and ciphertext
 - [Crypto Tools](https://drive.google.com/file/d/example456/view) - Collection of cryptography tools used
+=======
+## Description
+
+A simple cryptographic challenge that required decoding a base64-encoded message and applying a Caesar cipher.
+>>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 
 ## Solution
 
@@ -79,6 +85,15 @@ PBCTF{crypt0_1s_fun}
 
 > **Note:** You can place images inline within any step (as shown above) or group them here at the end. Use relative paths like `./images/screenshot1.png` or absolute URLs.
 
+<<<<<<< HEAD
+=======
+## Files and Resources
+
+- [Decrypt Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/crypto_decrypt.py) - Complete Python decryption script
+- [Challenge Files](https://www.dropbox.com/s/example/crypto_challenge.zip) - Original challenge files and ciphertext
+- [Crypto Tools](https://drive.google.com/file/d/example456/view) - Collection of cryptography tools used
+
+>>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 ## References
 
 - Python script: [decrypt.py](https://github.com/Farhan-25/CTF-Scripts/blob/main/crypto_decrypt.py)
