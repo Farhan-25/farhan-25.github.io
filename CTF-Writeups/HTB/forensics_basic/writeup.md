@@ -4,7 +4,6 @@
 **Difficulty:** Easy  
 **CTF:** HTB
 
-<<<<<<< HEAD
 ## Challenge Description
 
 A basic forensics challenge requiring analysis of a disk image to find hidden files and extract the flag. The challenge involves examining file structures, hidden data, and extracting the flag from within the disk image.
@@ -17,11 +16,6 @@ A basic forensics challenge requiring analysis of a disk image to find hidden fi
 - [Disk Image](https://www.dropbox.com/s/example/disk.img) - Original disk image file (password: htb2024)
 - [Analysis Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/forensics_analyze.sh) - Bash script for automated analysis
 - [Forensics Toolkit](https://drive.google.com/file/d/example321/view) - Collection of forensics tools
-=======
-## Description
-
-A basic forensics challenge requiring analysis of a disk image to find hidden files and extract the flag.
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 
 ## Solution
 
@@ -66,16 +60,6 @@ cat /mnt/forensics/.hidden_flag.txt
 ## Screenshots
 
 > **Note:** You can place images inline within any step (as shown above) or group them here at the end. Use relative paths like `./images/screenshot1.png` or absolute URLs.
-
-<<<<<<< HEAD
-=======
-## Files and Resources
-
-- [Disk Image](https://www.dropbox.com/s/example/disk.img) - Original disk image file (password: htb2024)
-- [Analysis Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/forensics_analyze.sh) - Bash script for automated analysis
-- [Forensics Toolkit](https://drive.google.com/file/d/example321/view) - Collection of forensics tools
-
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 ## Flag
 
 ```

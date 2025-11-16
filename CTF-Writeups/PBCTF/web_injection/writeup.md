@@ -4,7 +4,6 @@
 **Difficulty:** Medium  
 **CTF:** PBCTF
 
-<<<<<<< HEAD
 ## Challenge Description
 
 This challenge involved exploiting a SQL injection vulnerability in a web application. The goal was to extract sensitive information from the database. The challenge presents a web application with a login form that is vulnerable to SQL injection attacks.
@@ -17,11 +16,6 @@ This challenge involved exploiting a SQL injection vulnerability in a web applic
 - [Exploit Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/sql_injection_exploit.py) - Python script used for automated exploitation
 - [Payload Collection](https://drive.google.com/file/d/example123/view) - Collection of SQL injection payloads
 - [Burp Suite Project](https://www.dropbox.com/s/example/burp_project.zip) - Burp Suite project file with all requests
-=======
-## Description
-
-This challenge involved exploiting a SQL injection vulnerability in a web application. The goal was to extract sensitive information from the database.
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 
 ## Solution
 
@@ -69,16 +63,6 @@ PBCTF{5ql_1nj3ct10n_15_d4ng3r0us}
 ## Screenshots
 
 > **Note:** You can place images inline within any step (as shown above) or group them here at the end. Use relative paths like `./images/screenshot1.png` or absolute URLs.
-
-<<<<<<< HEAD
-=======
-## Files and Resources
-
-- [Exploit Script](https://github.com/Farhan-25/CTF-Scripts/blob/main/sql_injection_exploit.py) - Python script used for automated exploitation
-- [Payload Collection](https://drive.google.com/file/d/example123/view) - Collection of SQL injection payloads
-- [Burp Suite Project](https://www.dropbox.com/s/example/burp_project.zip) - Burp Suite project file with all requests
-
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 ## References
 
 - [SQL Injection Cheat Sheet](https://portswigger.net/web-security/sql-injection)

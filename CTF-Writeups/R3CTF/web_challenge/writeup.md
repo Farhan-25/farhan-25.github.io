@@ -4,7 +4,6 @@
 **Difficulty:** Hard  
 **CTF:** R3CTF
 
-<<<<<<< HEAD
 ## Challenge Description
 
 A complex web application challenge involving multiple security vulnerabilities including XSS, CSRF, and file upload vulnerabilities. The challenge requires identifying and exploiting these vulnerabilities in sequence to gain access to the flag stored on the server.
@@ -17,11 +16,6 @@ A complex web application challenge involving multiple security vulnerabilities 
 - [Webshell Payload](https://github.com/Farhan-25/CTF-Scripts/blob/main/php_webshell.php) - PHP webshell used for RCE
 - [Exploit Chain Script](https://www.dropbox.com/s/example/web_exploit.py) - Automated exploit script
 - [Burp Suite Config](https://drive.google.com/file/d/example789/view) - Burp Suite configuration for the challenge
-=======
-## Description
-
-A complex web application challenge involving multiple security vulnerabilities including XSS, CSRF, and file upload vulnerabilities.
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 
 ## Solution
 
@@ -52,16 +46,6 @@ Uploaded a malicious PHP shell and gained remote code execution.
 ## Screenshots
 
 > **Note:** You can place images inline within any step (as shown above) or group them here at the end. Use relative paths like `./images/screenshot1.png` or absolute URLs.
-
-<<<<<<< HEAD
-=======
-## Files and Resources
-
-- [Webshell Payload](https://github.com/Farhan-25/CTF-Scripts/blob/main/php_webshell.php) - PHP webshell used for RCE
-- [Exploit Chain Script](https://www.dropbox.com/s/example/web_exploit.py) - Automated exploit script
-- [Burp Suite Config](https://drive.google.com/file/d/example789/view) - Burp Suite configuration for the challenge
-
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 ## Flag
 
 ```

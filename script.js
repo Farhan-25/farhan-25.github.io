@@ -135,13 +135,10 @@ const ctfConfig = {
     'HTB': {
         name: 'HTB',
         readme: 'CTF-Writeups/HTB/README.md'
-<<<<<<< HEAD
     },
     'Platypwn 2025': {
         name: 'Platypwn 2025',
         readme: 'CTF-Writeups/Platypwn 2025/README.md'
-=======
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
     }
 };
 
@@ -391,11 +388,8 @@ function loadWriteup(writeupPath) {
                 // Set body
                 if (writeupBody) {
                     writeupBody.innerHTML = html;
-<<<<<<< HEAD
                     // Fix relative image and video paths
                     fixRelativePaths(writeupBody, writeupPath);
-=======
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
                     // Process images and captions
                     processImagesAndCaptions(writeupBody);
                     // Add copy buttons to code blocks
@@ -416,7 +410,6 @@ function loadWriteup(writeupPath) {
         });
 }
 
-<<<<<<< HEAD
 function fixRelativePaths(container, writeupPath) {
     // Get the directory of the writeup file
     const writeupDir = writeupPath.substring(0, writeupPath.lastIndexOf('/') + 1);
@@ -455,8 +448,6 @@ function fixRelativePaths(container, writeupPath) {
     });
 }
 
-=======
->>>>>>> 676522f23d6f2f0859ba7b2caf0cece1c9f505ed
 function processImagesAndCaptions(container) {
     // Find all images
     const images = container.querySelectorAll('img');
