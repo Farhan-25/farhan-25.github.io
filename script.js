@@ -25,8 +25,8 @@ function handleNavClick() {
         targetArticle.classList.add('active');
     }
 
-    // Hide sidebar when on CTF writeups page
-    if (targetPage === 'ctf writeups') {
+    // Hide sidebar when on CTF writeups or AoC page
+    if (targetPage === 'ctf writeups' || targetPage === 'advent of cyber') {
         if (sidebar) sidebar.style.display = 'none';
     } else {
         if (sidebar) sidebar.style.display = '';

@@ -2153,3 +2153,144 @@ body:has(.ctf-writeups.active) .writeup-content {
   .social-list { justify-content: center; }
 
 }
+
+/*-----------------------------------*\
+  #ADVENT OF CYBER
+\*-----------------------------------*/
+
+.aoc-content {
+  margin-bottom: 30px;
+}
+
+.aoc-intro {
+  margin-bottom: 30px;
+}
+
+.aoc-intro p {
+  color: var(--light-gray-70);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-3);
+  line-height: 1.6;
+}
+
+.aoc-link-container {
+  margin-bottom: 40px;
+}
+
+.aoc-link-card {
+  background: var(--border-gradient-onyx);
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+  position: relative;
+  z-index: 1;
+  transition: all var(--transition-1);
+}
+
+.aoc-link-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.aoc-link-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-3);
+}
+
+.aoc-link-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.aoc-link-header ion-icon {
+  font-size: 32px;
+  color: var(--orange-yellow-crayola);
+}
+
+.aoc-link-header .h3 {
+  color: var(--white-2);
+  font-size: var(--fs-2);
+  margin: 0;
+}
+
+.aoc-link-description {
+  color: var(--light-gray-70);
+  font-size: var(--fs-6);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.aoc-link-button {
+  background: var(--text-gradient-yellow);
+  color: var(--smoky-black);
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-600);
+  cursor: pointer;
+  transition: all var(--transition-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.aoc-link-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-3);
+}
+
+.aoc-link-button ion-icon {
+  font-size: 18px;
+}
+
+.aoc-info {
+  background: var(--border-gradient-onyx);
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+  position: relative;
+  z-index: 1;
+}
+
+.aoc-info::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.aoc-info .h3 {
+  color: var(--white-2);
+  font-size: var(--fs-3);
+  margin-bottom: 15px;
+}
+
+.aoc-info p {
+  color: var(--light-gray-70);
+  font-size: var(--fs-6);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Hide sidebar when AoC page is active */
+body:has(.aoc-writeups.active) .sidebar {
+  display: none;
+}
+
+body:has(.aoc-writeups.active) .main-content {
+  max-width: 100%;
+}
+
+body:has(.aoc-writeups.active) main {
+  max-width: 100%;
+}
