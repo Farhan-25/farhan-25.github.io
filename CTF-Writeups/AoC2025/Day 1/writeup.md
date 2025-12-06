@@ -111,3 +111,4 @@ This challenge was a great introduction to web security and SQL injection. The k
 
 An alternative approach would be to use `sqlmap` for automated exploitation, but manual testing helps understand the vulnerability better.
 
+

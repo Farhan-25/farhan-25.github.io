@@ -11,3 +11,4 @@ This folder contains writeups for TryHackMe's Advent of Cyber 2025 challenges.
 
 - [Sidequest 1: Hidden Files in the North Pole](./Sidequest%201/writeup.md)
 
+

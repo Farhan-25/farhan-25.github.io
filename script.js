@@ -25,11 +25,74 @@ function handleNavClick() {
         targetArticle.classList.add('active');
     }
 
-    // Hide sidebar when on CTF writeups or AoC page
-    if (targetPage === 'ctf writeups' || targetPage === 'advent of cyber') {
+    // Hide sidebar when on writeups page
+    if (targetPage === 'writeups') {
         if (sidebar) sidebar.style.display = 'none';
     } else {
         if (sidebar) sidebar.style.display = '';
+    }
+    
+    // Update URL hash only for writeups, don't interfere with other pages
+    if (targetPage === 'writeups') {
+        // Don't set hash here, let the writeups system handle it
+    } else {
+        // Clear hash for other pages to avoid conflicts
+        if (window.location.hash) {
+            window.history.replaceState(null, '', window.location.pathname);
+        }
+    }
+}
+
+// Handle URL hash routing
+function handleHashRoute() {
+    const hash = window.location.hash.substring(1); // Remove #
+    
+    // Only handle writeups routes, ignore other hashes (about, portfolio, etc.)
+    if (!hash || (hash !== 'writeups' && !hash.startsWith('writeups/'))) {
+        // Let normal navigation handle other pages
+        return;
+    }
+    
+    // Navigate to writeups page first if not already there
+    const writeupsLink = Array.from(navLinks).find(link => 
+        link.getAttribute('data-nav-link') === 'writeups'
+    );
+    if (writeupsLink && !writeupsLink.classList.contains('active')) {
+        writeupsLink.click();
+    }
+    
+    // Handle /writeups route
+    if (hash === 'writeups') {
+        setTimeout(() => {
+            showWriteupsIndex();
+        }, 100);
+        return;
+    }
+    
+    // Handle /writeups/AoC2025 or /writeups/PBCTF etc.
+    if (hash.startsWith('writeups/')) {
+        const parts = hash.split('/');
+        if (parts.length >= 2) {
+            const writeupKey = parts[1]; // e.g., 'AoC2025', 'PBCTF'
+            const challengePath = parts.slice(2).join('/'); // e.g., 'Day-1' or empty
+            
+            // Wait for data to load if needed
+            if (Object.keys(allWriteupsData).length === 0) {
+                setTimeout(() => {
+                    if (allWriteupsData[writeupKey]) {
+                        showWriteupsView(writeupKey, challengePath);
+                    } else {
+                        setTimeout(() => {
+                            showWriteupsView(writeupKey, challengePath);
+                        }, 500);
+                    }
+                }, 200);
+            } else {
+                setTimeout(() => {
+                    showWriteupsView(writeupKey, challengePath);
+                }, 100);
+            }
+        }
     }
 }
 
@@ -117,28 +180,57 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ensure sidebar is visible by default (for about page)
     if (sidebar) sidebar.style.display = '';
 
-    // Initialize CTF Writeups
-    initCTFWriteups();
+    // Initialize Writeups
+    initWriteups();
+    
+    // Handle initial hash route only if it's a writeups route
+    const initialHash = window.location.hash.substring(1);
+    if (initialHash === 'writeups' || initialHash.startsWith('writeups/')) {
+        handleHashRoute();
+    }
 });
 
-// CTF Writeups Functionality
-// CTF configuration - just define which CTFs exist and their README paths
+// Listen for hash changes - but only handle writeups routes
+window.addEventListener('hashchange', function() {
+    const hash = window.location.hash.substring(1);
+    // Only process writeups-related hashes
+    if (hash === 'writeups' || hash.startsWith('writeups/')) {
+        handleHashRoute();
+    }
+    // For other hashes (about, portfolio, etc.), let normal navigation handle them
+});
+
+// Unified Writeups Functionality
+// CTF configuration
 const ctfConfig = {
     'PBCTF': {
         name: 'PBCTF',
-        readme: 'CTF-Writeups/PBCTF/README.md'
+        readme: 'CTF-Writeups/PBCTF/README.md',
+        type: 'ctf'
     },
     'R3CTF': {
         name: 'R3CTF',
-        readme: 'CTF-Writeups/R3CTF/README.md'
+        readme: 'CTF-Writeups/R3CTF/README.md',
+        type: 'ctf'
     },
     'HTB': {
         name: 'HTB',
-        readme: 'CTF-Writeups/HTB/README.md'
+        readme: 'CTF-Writeups/HTB/README.md',
+        type: 'ctf'
     },
     'Platypwn 2025': {
         name: 'Platypwn 2025',
-        readme: 'CTF-Writeups/Platypwn 2025/README.md'
+        readme: 'CTF-Writeups/Platypwn 2025/README.md',
+        type: 'ctf'
+    }
+};
+
+// AoC configuration
+const aocConfig = {
+    'AoC2025': {
+        name: 'Advent of Cyber 2025',
+        readme: 'CTF-Writeups/AoC2025/README.md',
+        type: 'aoc'
     }
 };
 
@@ -551,4 +643,631 @@ function addCopyButtonsToCodeBlocks(container) {
         preElement.style.position = 'relative';
         preElement.appendChild(copyBtn);
     });
+}
+
+// AoC Writeups Functionality
+// Dynamic AoC data loaded from README files
+let aocData = {};
+
+let selectedAoCYear = null;
+let selectedAoCChallenge = null;
+
+// Load AoC data from README files
+async function loadAoCData() {
+    const promises = Object.keys(aocConfig).map(async (aocKey) => {
+        const config = aocConfig[aocKey];
+        try {
+            const response = await fetch(config.readme);
+            if (!response.ok) {
+                console.warn(`Failed to load README for ${aocKey}`);
+                return { key: aocKey, challenges: [] };
+            }
+            const readmeContent = await response.text();
+            const challenges = parseAoCChallengesFromReadme(readmeContent, aocKey);
+            
+            return {
+                key: aocKey,
+                data: {
+                    name: config.name,
+                    challenges: challenges
+                }
+            };
+        } catch (error) {
+            console.error(`Error loading ${aocKey} README:`, error);
+            return { key: aocKey, data: { name: config.name, challenges: [] } };
+        }
+    });
+    
+    const results = await Promise.all(promises);
+    
+    // Build aocData object
+    results.forEach(result => {
+        aocData[result.key] = result.data;
+    });
+    
+    // Now populate the AoC year list
+    populateAoCYearList();
+}
+
+function populateAoCYearList() {
+    const aocYearList = document.getElementById('aocYearList');
+    if (!aocYearList) return;
+    
+    // Clear existing list
+    aocYearList.innerHTML = '';
+    
+    // Populate AoC year list
+    Object.keys(aocData).forEach(aocKey => {
+        const aoc = aocData[aocKey];
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.className = 'ctf-item';
+        button.textContent = aoc.name;
+        button.setAttribute('data-aoc-year', aocKey);
+        button.addEventListener('click', () => selectAoCYear(aocKey));
+        li.appendChild(button);
+        aocYearList.appendChild(li);
+    });
+}
+
+function initAoCWriteups() {
+    const challengeList = document.getElementById('aocChallengeList');
+    if (!challengeList) return;
+    
+    // Load AoC data dynamically from README files
+    loadAoCData();
+}
+
+function selectAoCYear(aocKey) {
+    selectedAoCYear = aocKey;
+    const aoc = aocData[aocKey];
+    
+    // Check if data is loaded
+    if (!aoc) {
+        console.warn(`AoC data for ${aocKey} not loaded yet`);
+        return;
+    }
+    
+    // Update active AoC year
+    document.querySelectorAll('[data-aoc-year]').forEach(item => {
+        item.classList.remove('active');
+    });
+    const activeButton = document.querySelector(`[data-aoc-year="${aocKey}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+    
+    // Populate challenge list
+    const challengeList = document.getElementById('aocChallengeList');
+    challengeList.innerHTML = '';
+    
+    if (aoc.challenges.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'no-selection';
+        li.textContent = 'No challenges available';
+        challengeList.appendChild(li);
+    } else {
+        aoc.challenges.forEach((challenge, index) => {
+            const li = document.createElement('li');
+            const button = document.createElement('button');
+            button.className = 'challenge-item';
+            button.setAttribute('data-aoc-challenge', index);
+            button.addEventListener('click', () => selectAoCChallenge(aocKey, index));
+            
+            // Create challenge name span
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'challenge-name';
+            nameSpan.textContent = challenge.name;
+            
+            // Create solve count badge
+            const solveBadge = document.createElement('span');
+            solveBadge.className = 'solve-count';
+            solveBadge.textContent = challenge.solves || 0;
+            solveBadge.setAttribute('title', `${challenge.solves || 0} solves`);
+            
+            button.appendChild(nameSpan);
+            button.appendChild(solveBadge);
+            li.appendChild(button);
+            challengeList.appendChild(li);
+        });
+    }
+    
+    // Reset writeup display
+    showAoCPlaceholder();
+}
+
+function selectAoCChallenge(aocKey, challengeIndex) {
+    selectedAoCChallenge = challengeIndex;
+    const aoc = aocData[aocKey];
+    const challenge = aoc.challenges[challengeIndex];
+    
+    // Update active challenge
+    document.querySelectorAll('[data-aoc-challenge]').forEach(item => {
+        item.classList.remove('active');
+    });
+    const activeButton = document.querySelector(`[data-aoc-challenge="${challengeIndex}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+    
+    // Update URL hash for direct linking
+    const folderName = challenge.folder.replace(/\s+/g, '-');
+    window.location.hash = `writeup/${aocKey}/${folderName}`;
+    
+    // Load writeup
+    loadAoCWriteup(challenge.writeup);
+}
+
+function showAoCPlaceholder() {
+    const placeholder = document.getElementById('aocWriteupPlaceholder');
+    const display = document.getElementById('aocWriteupDisplay');
+    
+    if (placeholder) placeholder.style.display = 'flex';
+    if (display) display.style.display = 'none';
+}
+
+function loadAoCWriteup(writeupPath) {
+    const placeholder = document.getElementById('aocWriteupPlaceholder');
+    const display = document.getElementById('aocWriteupDisplay');
+    const writeupTitle = document.getElementById('aocWriteupTitle');
+    const writeupMeta = document.getElementById('aocWriteupMeta');
+    const writeupBody = document.getElementById('aocWriteupBody');
+    
+    // Show loading state
+    if (placeholder) placeholder.style.display = 'none';
+    if (display) display.style.display = 'block';
+    if (writeupBody) writeupBody.innerHTML = '<p>Loading writeup...</p>';
+    
+    // Fetch markdown file
+    fetch(writeupPath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to load writeup');
+            }
+            return response.text();
+        })
+        .then(markdown => {
+            // Parse markdown
+            if (typeof marked !== 'undefined') {
+                const html = marked.parse(markdown);
+                
+                // Extract title and metadata from markdown
+                const titleMatch = markdown.match(/^#\s+(.+)$/m);
+                const categoryMatch = markdown.match(/\*\*Category:\*\*\s+(.+)/);
+                const difficultyMatch = markdown.match(/\*\*Difficulty:\*\*\s+(.+)/);
+                const yearMatch = markdown.match(/\*\*Year:\*\*\s+(.+)/);
+                const typeMatch = markdown.match(/\*\*Type:\*\*\s+(.+)/);
+                
+                // Set title
+                if (writeupTitle && titleMatch) {
+                    writeupTitle.textContent = titleMatch[1];
+                }
+                
+                // Set metadata
+                if (writeupMeta) {
+                    writeupMeta.innerHTML = '';
+                    
+                    if (categoryMatch) {
+                        const badge = document.createElement('span');
+                        badge.className = 'meta-badge category';
+                        badge.textContent = `Category: ${categoryMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                    
+                    if (difficultyMatch) {
+                        const badge = document.createElement('span');
+                        const difficulty = difficultyMatch[1].trim().toLowerCase();
+                        badge.className = `meta-badge difficulty ${difficulty}`;
+                        badge.textContent = `Difficulty: ${difficultyMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                    
+                    if (yearMatch) {
+                        const badge = document.createElement('span');
+                        badge.className = 'meta-badge';
+                        badge.textContent = `Year: ${yearMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                    
+                    if (typeMatch) {
+                        const badge = document.createElement('span');
+                        badge.className = 'meta-badge';
+                        badge.textContent = `Type: ${typeMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                }
+                
+                // Set body
+                if (writeupBody) {
+                    writeupBody.innerHTML = html;
+                    // Fix relative image and video paths
+                    fixRelativePaths(writeupBody, writeupPath);
+                    // Process images and captions
+                    processImagesAndCaptions(writeupBody);
+                    // Add copy buttons to code blocks
+                    addCopyButtonsToCodeBlocks(writeupBody);
+                }
+            } else {
+                // Fallback if marked.js is not loaded
+                if (writeupBody) {
+                    writeupBody.innerHTML = '<p>Markdown parser not loaded. Please refresh the page.</p><pre>' + markdown + '</pre>';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error loading AoC writeup:', error);
+            if (writeupBody) {
+                writeupBody.innerHTML = `<p style="color: var(--bittersweet-shimmer);">Error loading writeup: ${error.message}</p>`;
+            }
+        });
+}
+
+// ============================================
+// UNIFIED WRITEUPS SYSTEM
+// ============================================
+
+let allWriteupsData = {};
+let currentWriteupKey = null;
+let currentChallengeIndex = null;
+
+// Parse challenges from README (unified for CTF and AoC)
+function parseChallengesFromReadmeUnified(readmeContent, writeupKey) {
+    const challenges = [];
+    const lines = readmeContent.split('\n');
+    const challengePattern = /^-\s+\[(.+?)\]\(\.\/(.+?)\/writeup\.md\)/;
+    
+    for (const line of lines) {
+        const match = line.match(challengePattern);
+        if (match) {
+            const challengeName = match[1].trim();
+            let folder = match[2].trim();
+            folder = decodeURIComponent(folder);
+            const writeupPath = `CTF-Writeups/${writeupKey}/${folder}/writeup.md`;
+            
+            challenges.push({
+                name: challengeName,
+                folder: folder,
+                writeup: writeupPath
+            });
+        }
+    }
+    
+    return challenges;
+}
+
+// Load all writeups data
+async function loadAllWriteupsData() {
+    const allConfigs = { ...ctfConfig, ...aocConfig };
+    const promises = Object.keys(allConfigs).map(async (key) => {
+        const config = allConfigs[key];
+        try {
+            const response = await fetch(config.readme);
+            if (!response.ok) {
+                return { key, data: { name: config.name, challenges: [], type: config.type } };
+            }
+            const readmeContent = await response.text();
+            const challenges = parseChallengesFromReadmeUnified(readmeContent, key);
+            
+            return {
+                key,
+                data: {
+                    name: config.name,
+                    challenges: challenges,
+                    type: config.type
+                }
+            };
+        } catch (error) {
+            console.error(`Error loading ${key} README:`, error);
+            return { key, data: { name: config.name, challenges: [], type: config.type } };
+        }
+    });
+    
+    const results = await Promise.all(promises);
+    results.forEach(result => {
+        allWriteupsData[result.key] = result.data;
+    });
+    
+    populateWriteupsIndex();
+}
+
+// Populate writeups index
+function populateWriteupsIndex() {
+    const ctfGrid = document.getElementById('ctfWriteupsGrid');
+    const aocGrid = document.getElementById('aocWriteupsGrid');
+    
+    if (!ctfGrid || !aocGrid) return;
+    
+    ctfGrid.innerHTML = '';
+    aocGrid.innerHTML = '';
+    
+    Object.keys(ctfConfig).forEach(key => {
+        const writeup = allWriteupsData[key];
+        if (writeup) {
+            const card = createWriteupCard(writeup, key);
+            ctfGrid.appendChild(card);
+        }
+    });
+    
+    Object.keys(aocConfig).forEach(key => {
+        const writeup = allWriteupsData[key];
+        if (writeup) {
+            const card = createWriteupCard(writeup, key);
+            aocGrid.appendChild(card);
+        }
+    });
+}
+
+// Create writeup card
+function createWriteupCard(writeup, key) {
+    const card = document.createElement('div');
+    card.className = 'writeup-card';
+    card.setAttribute('data-writeup-key', key);
+    card.style.cursor = 'pointer';
+    
+    card.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Navigate to writeups page first if not already there
+        const writeupsLink = Array.from(navLinks).find(link => 
+            link.getAttribute('data-nav-link') === 'writeups'
+        );
+        if (writeupsLink && !writeupsLink.classList.contains('active')) {
+            writeupsLink.click();
+        }
+        
+        // Set hash and show view
+        window.location.hash = `writeups/${key}`;
+        
+        // Show view after a short delay to ensure navigation happened
+        setTimeout(() => {
+            if (allWriteupsData[key]) {
+                showWriteupsView(key);
+            } else {
+                // If data not loaded yet, wait a bit more
+                setTimeout(() => {
+                    if (allWriteupsData[key]) {
+                        showWriteupsView(key);
+                    } else {
+                        console.warn(`Writeup data for ${key} not loaded yet`);
+                    }
+                }, 500);
+            }
+        }, 150);
+    });
+    
+    const icon = writeup.type === 'aoc' ? 'calendar-outline' : 'flag-outline';
+    
+    card.innerHTML = `
+        <div class="writeup-card-header">
+            <ion-icon name="${icon}"></ion-icon>
+            <h4 class="writeup-card-title">${writeup.name}</h4>
+        </div>
+        <p class="writeup-card-description">
+            ${writeup.challenges.length} challenge${writeup.challenges.length !== 1 ? 's' : ''} available
+        </p>
+        <div class="writeup-card-count">
+            <ion-icon name="document-text-outline"></ion-icon>
+            <span>${writeup.challenges.length} writeup${writeup.challenges.length !== 1 ? 's' : ''}</span>
+        </div>
+    `;
+    
+    return card;
+}
+
+// Show writeups index
+function showWriteupsIndex() {
+    const index = document.getElementById('writeupsIndex');
+    const view = document.getElementById('writeupsView');
+    
+    if (index) index.style.display = 'block';
+    if (view) view.style.display = 'none';
+}
+
+// Show writeups view
+function showWriteupsView(writeupKey, challengePath = null) {
+    const index = document.getElementById('writeupsIndex');
+    const view = document.getElementById('writeupsView');
+    const viewTitle = document.getElementById('writeupsViewTitle');
+    const backButton = document.getElementById('writeupsBackButton');
+    
+    if (!index || !view) return;
+    
+    const writeup = allWriteupsData[writeupKey];
+    if (!writeup) {
+        console.warn(`Writeup ${writeupKey} not found`);
+        return;
+    }
+    
+    currentWriteupKey = writeupKey;
+    
+    index.style.display = 'none';
+    view.style.display = 'block';
+    
+    if (viewTitle) viewTitle.textContent = writeup.name;
+    
+    if (backButton) {
+        // Remove any existing listeners
+        const newBackButton = backButton.cloneNode(true);
+        backButton.parentNode.replaceChild(newBackButton, backButton);
+        
+        // Add click handler
+        newBackButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = 'writeups';
+            setTimeout(() => {
+                showWriteupsIndex();
+            }, 50);
+        });
+    }
+    
+    populateChallengeListUnified(writeup.challenges);
+    
+    if (challengePath) {
+        const challengeIndex = writeup.challenges.findIndex(c => {
+            const folderName = c.folder.replace(/\s+/g, '-');
+            return folderName === challengePath || c.folder === challengePath;
+        });
+        if (challengeIndex !== -1) {
+            selectChallengeUnified(challengeIndex);
+        }
+    } else {
+        showWriteupPlaceholderUnified();
+    }
+}
+
+// Populate challenge list
+function populateChallengeListUnified(challenges) {
+    const challengeList = document.getElementById('challengeList');
+    if (!challengeList) return;
+    
+    challengeList.innerHTML = '';
+    
+    if (challenges.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'no-selection';
+        li.textContent = 'No challenges available';
+        challengeList.appendChild(li);
+        return;
+    }
+    
+    challenges.forEach((challenge, index) => {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.className = 'challenge-item';
+        button.setAttribute('data-challenge-index', index);
+        button.addEventListener('click', () => selectChallengeUnified(index));
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'challenge-name';
+        nameSpan.textContent = challenge.name;
+        
+        button.appendChild(nameSpan);
+        li.appendChild(button);
+        challengeList.appendChild(li);
+    });
+}
+
+// Select challenge
+function selectChallengeUnified(index) {
+    if (!currentWriteupKey) return;
+    
+    const writeup = allWriteupsData[currentWriteupKey];
+    if (!writeup || !writeup.challenges[index]) return;
+    
+    currentChallengeIndex = index;
+    const challenge = writeup.challenges[index];
+    
+    document.querySelectorAll('[data-challenge-index]').forEach(item => {
+        item.classList.remove('active');
+    });
+    const activeButton = document.querySelector(`[data-challenge-index="${index}"]`);
+    if (activeButton) activeButton.classList.add('active');
+    
+    const folderName = challenge.folder.replace(/\s+/g, '-');
+    window.location.hash = `writeups/${currentWriteupKey}/${folderName}`;
+    
+    loadWriteupUnified(challenge.writeup, writeup.type);
+}
+
+// Show placeholder
+function showWriteupPlaceholderUnified() {
+    const placeholder = document.getElementById('writeupPlaceholder');
+    const display = document.getElementById('writeupDisplay');
+    
+    if (placeholder) placeholder.style.display = 'flex';
+    if (display) display.style.display = 'none';
+}
+
+// Load writeup (unified)
+function loadWriteupUnified(writeupPath, type) {
+    const placeholder = document.getElementById('writeupPlaceholder');
+    const display = document.getElementById('writeupDisplay');
+    const writeupTitle = document.getElementById('writeupTitle');
+    const writeupMeta = document.getElementById('writeupMeta');
+    const writeupBody = document.getElementById('writeupBody');
+    
+    if (placeholder) placeholder.style.display = 'none';
+    if (display) display.style.display = 'block';
+    if (writeupBody) writeupBody.innerHTML = '<p>Loading writeup...</p>';
+    
+    fetch(writeupPath)
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load writeup');
+            return response.text();
+        })
+        .then(markdown => {
+            if (typeof marked !== 'undefined') {
+                const html = marked.parse(markdown);
+                
+                const titleMatch = markdown.match(/^#\s+(.+)$/m);
+                const categoryMatch = markdown.match(/\*\*Category:\*\*\s+(.+)/);
+                const difficultyMatch = markdown.match(/\*\*Difficulty:\*\*\s+(.+)/);
+                const ctfMatch = markdown.match(/\*\*CTF:\*\*\s+(.+)/);
+                const yearMatch = markdown.match(/\*\*Year:\*\*\s+(.+)/);
+                const typeMatch = markdown.match(/\*\*Type:\*\*\s+(.+)/);
+                
+                if (writeupTitle && titleMatch) {
+                    writeupTitle.textContent = titleMatch[1];
+                }
+                
+                if (writeupMeta) {
+                    writeupMeta.innerHTML = '';
+                    
+                    if (categoryMatch) {
+                        const badge = document.createElement('span');
+                        badge.className = 'meta-badge category';
+                        badge.textContent = `Category: ${categoryMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                    
+                    if (difficultyMatch) {
+                        const badge = document.createElement('span');
+                        const difficulty = difficultyMatch[1].trim().toLowerCase();
+                        badge.className = `meta-badge difficulty ${difficulty}`;
+                        badge.textContent = `Difficulty: ${difficultyMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                    
+                    if (ctfMatch) {
+                        const badge = document.createElement('span');
+                        badge.className = 'meta-badge';
+                        badge.textContent = `CTF: ${ctfMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                    
+                    if (yearMatch) {
+                        const badge = document.createElement('span');
+                        badge.className = 'meta-badge';
+                        badge.textContent = `Year: ${yearMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                    
+                    if (typeMatch) {
+                        const badge = document.createElement('span');
+                        badge.className = 'meta-badge';
+                        badge.textContent = `Type: ${typeMatch[1].trim()}`;
+                        writeupMeta.appendChild(badge);
+                    }
+                }
+                
+                if (writeupBody) {
+                    writeupBody.innerHTML = html;
+                    fixRelativePaths(writeupBody, writeupPath);
+                    processImagesAndCaptions(writeupBody);
+                    addCopyButtonsToCodeBlocks(writeupBody);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error loading writeup:', error);
+            if (writeupBody) {
+                writeupBody.innerHTML = `<p style="color: var(--bittersweet-shimmer);">Error loading writeup: ${error.message}</p>`;
+            }
+        });
+}
+
+// Initialize unified writeups
+function initWriteups() {
+    loadAllWriteupsData();
 }

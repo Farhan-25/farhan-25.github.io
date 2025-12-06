@@ -147,3 +147,4 @@ The challenge emphasized the importance of thorough file system analysis. Hidden
 
 An alternative approach would be to use specialized forensics tools like Autopsy or The Sleuth Kit, but command-line tools provide more control and understanding of the process.
 
+

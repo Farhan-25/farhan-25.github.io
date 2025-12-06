@@ -156,11 +156,7 @@
            </li>
 
            <li class="navbar-item">
-             <button class="navbar-link" data-nav-link="ctf writeups">CTF Writeups</button>
-           </li>
-
-           <li class="navbar-item">
-             <button class="navbar-link" data-nav-link="advent of cyber">Advent of Cyber</button>
+             <button class="navbar-link" data-nav-link="writeups">Writeups</button>
            </li>
 
         </ul>
@@ -555,88 +551,85 @@
 
 </article>
 
-<article class="ctf-writeups" data-page="ctf writeups">
+<article class="writeups" data-page="writeups">
 
         <header>
-          <h2 class="h2 article-title">CTF Writeups</h2>
+          <h2 class="h2 article-title">Writeups</h2>
         </header>
 
-        <div class="writeups-container">
-          <!-- Left Sidebar: CTF List -->
-          <aside class="writeups-sidebar writeups-sidebar-left">
-            <h3 class="sidebar-title">CTFs</h3>
-            <ul class="ctf-list" id="ctfList">
-              <!-- CTF items will be populated by JavaScript -->
-            </ul>
-          </aside>
-
-          <!-- Main Content: Writeup Display -->
-          <main class="writeup-content">
-            <div class="writeup-placeholder" id="writeupPlaceholder">
-              <div class="placeholder-content">
-                <ion-icon name="document-text-outline"></ion-icon>
-                <h3>Select a Challenge</h3>
-                <p>Choose a CTF from the left sidebar, then select a challenge from the right sidebar to view its writeup.</p>
-              </div>
-            </div>
-            <div class="writeup-display" id="writeupDisplay" style="display: none;">
-              <div class="writeup-header">
-                <h3 class="writeup-title" id="writeupTitle"></h3>
-                <div class="writeup-meta" id="writeupMeta"></div>
-              </div>
-              <div class="writeup-body" id="writeupBody"></div>
-            </div>
-          </main>
-
-          <!-- Right Sidebar: Challenge List -->
-          <aside class="writeups-sidebar writeups-sidebar-right">
-            <h3 class="sidebar-title">Challenges</h3>
-            <ul class="challenge-list" id="challengeList">
-              <li class="no-selection">Select a CTF to view challenges</li>
-            </ul>
-          </aside>
-        </div>
-      </article>
-
-      <article class="aoc-writeups" data-page="advent of cyber">
-
-        <header>
-          <h2 class="h2 article-title">Advent of Cyber</h2>
-        </header>
-
-        <section class="aoc-content">
-          <div class="aoc-intro">
-            <p>
-              Welcome to my Advent of Cyber writeups! Here you can find detailed solutions and walkthroughs for TryHackMe's Advent of Cyber challenges.
-            </p>
-          </div>
-
-          <div class="aoc-link-container">
-            <div class="aoc-link-card">
-              <div class="aoc-link-header">
-                <ion-icon name="calendar-outline"></ion-icon>
-                <h3 class="h3">Advent of Cyber 2025</h3>
-              </div>
-              <p class="aoc-link-description">
-                View all my writeups for Advent of Cyber 2025, including both normal day quests and sidequests.
+        <!-- Writeups Index View: Shows all CTFs and AoC years -->
+        <div class="writeups-index" id="writeupsIndex">
+          <div class="writeups-index-content">
+            <div class="writeups-intro">
+              <p>
+                Welcome to my writeups collection! Here you can find detailed solutions and walkthroughs for various CTF competitions and Advent of Cyber challenges.
               </p>
-              <a href="https://farhan-25.github.io/writeups/AoC2025" target="_blank" class="aoc-link-button">
-                <span>View Writeups</span>
-                <ion-icon name="open-outline"></ion-icon>
-              </a>
+            </div>
+
+            <div class="writeups-categories">
+              <!-- CTF Writeups Section -->
+              <div class="writeups-category">
+                <h3 class="h3 category-title">
+                  <ion-icon name="flag-outline"></ion-icon>
+                  CTF Competitions
+                </h3>
+                <div class="writeups-grid" id="ctfWriteupsGrid">
+                  <!-- CTF items will be populated by JavaScript -->
+                </div>
+              </div>
+
+              <!-- AoC Writeups Section -->
+              <div class="writeups-category">
+                <h3 class="h3 category-title">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  Advent of Cyber
+                </h3>
+                <div class="writeups-grid" id="aocWriteupsGrid">
+                  <!-- AoC items will be populated by JavaScript -->
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="aoc-info">
-            <h3 class="h3">About Advent of Cyber</h3>
-            <p>
-              Advent of Cyber is TryHackMe's annual cybersecurity training event that runs throughout December. 
-              Each day features new challenges covering various cybersecurity topics, from web security to forensics, 
-              cryptography, and more. The event includes both regular day challenges and optional sidequests for 
-              additional practice.
-            </p>
+        <!-- Individual Writeup View: Shows challenges and writeup content -->
+        <div class="writeups-view" id="writeupsView" style="display: none;">
+          <div class="writeups-view-header">
+            <button class="back-button" id="writeupsBackButton">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+              <span>Back to Writeups</span>
+            </button>
+            <h3 class="h3 writeups-view-title" id="writeupsViewTitle"></h3>
           </div>
-        </section>
+
+          <div class="writeups-container">
+            <!-- Main Content: Writeup Display -->
+            <main class="writeup-content writeup-content-main">
+              <div class="writeup-placeholder" id="writeupPlaceholder">
+                <div class="placeholder-content">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                  <h3>Select a Challenge</h3>
+                  <p>Choose a challenge from the sidebar to view its writeup.</p>
+                </div>
+              </div>
+              <div class="writeup-display" id="writeupDisplay" style="display: none;">
+                <div class="writeup-header">
+                  <h3 class="writeup-title" id="writeupTitle"></h3>
+                  <div class="writeup-meta" id="writeupMeta"></div>
+                </div>
+                <div class="writeup-body" id="writeupBody"></div>
+              </div>
+            </main>
+
+            <!-- Right Sidebar: Challenge List -->
+            <aside class="writeups-sidebar writeups-sidebar-right">
+              <h3 class="sidebar-title">Challenges</h3>
+              <ul class="challenge-list" id="challengeList">
+                <li class="no-selection">Loading challenges...</li>
+              </ul>
+            </aside>
+          </div>
+        </div>
 
       </article>
     </div>
