@@ -552,16 +552,20 @@ function processImagesAndCaptions(container) {
         // Find the next sibling paragraph
         let nextSibling = imgParagraph.nextElementSibling;
         
-        // Look for the next paragraph that contains italic text (caption)
+        // Look for the next paragraph that contains italic text with "Caption:" or "caption:"
         while (nextSibling) {
             if (nextSibling.tagName === 'P') {
                 const emElement = nextSibling.querySelector('em');
                 if (emElement) {
-                    // Found a caption! Mark it for styling
-                    emElement.classList.add('image-caption');
-                    // Also mark the paragraph
-                    nextSibling.classList.add('image-caption-wrapper');
-                    break;
+                    // Check if the italic text contains "Caption:" or "caption:"
+                    const emText = emElement.textContent.trim();
+                    if (emText.toLowerCase().includes('caption:')) {
+                        // Found a caption! Mark it for styling
+                        emElement.classList.add('image-caption');
+                        // Also mark the paragraph
+                        nextSibling.classList.add('image-caption-wrapper');
+                        break;
+                    }
                 }
             }
             // If we hit a heading or other block element, stop looking
@@ -1174,6 +1178,14 @@ function selectChallengeUnified(index) {
 function showWriteupPlaceholderUnified() {
     const placeholder = document.getElementById('writeupPlaceholder');
     const display = document.getElementById('writeupDisplay');
+    
+    // Clear any active challenge selection
+    document.querySelectorAll('[data-challenge-index]').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Reset current challenge index
+    currentChallengeIndex = null;
     
     if (placeholder) placeholder.style.display = 'flex';
     if (display) display.style.display = 'none';

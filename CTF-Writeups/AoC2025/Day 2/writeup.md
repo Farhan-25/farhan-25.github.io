@@ -159,3 +159,4 @@ This challenge was excellent for learning about basic cryptography concepts. The
 A useful tip: when dealing with encrypted messages, try common encoding methods first (Base64, hex, URL encoding) before moving to more complex ciphers. Tools like CyberChef can help quickly test multiple encoding schemes.
 
 
+

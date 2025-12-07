@@ -1,42 +1,38 @@
-# Day [X]: [Challenge Name]
+# Day [X]: [Day Title]
 
 **Category:** [Category Name]  
 **Difficulty:** [Easy/Medium/Hard]  
 **Year:** [2024/2025]  
 **Type:** [Normal Day Quest / Sidequest]
 
-## Challenge Description
+## Day Overview
 
-[Write a brief description of the challenge here. Include what the challenge is about, what you need to do, and any important context. You can add images within the description to show the challenge interface, initial state, or any visual elements.]
+[Brief description of what this day covers. You can add images, codeblocks, or links anywhere in this section.]
 
-![Challenge Interface](path/to/challenge_image.png)
-*Caption: Screenshot of the challenge interface or initial state*
+![Day Overview Image](path/to/image.png)
+*Caption: Description of the image*
 
-[Continue with any additional description or context about the challenge...]
+## Task 1: [Task Name]
 
-## Files and Resources
+[Description of Task 1. Add any context, images, or code here as needed.]
 
-- [Script Name](https://github.com/your-username/repo/blob/main/script.py) - Description of what the script does
-- [File Name](https://www.dropbox.com/s/example/file.zip) - Description of the file
-- [Tool Collection](https://drive.google.com/file/d/example/view) - Description of the resource
+### Question 1.1: [Question Text]
 
-## Solution
-
-### Step 1: [Step Name]
-
-[Describe what you did in this step. Include any reconnaissance, analysis, or initial attempts.]
+[Your answer/explanation for Question 1.1. You can add images, codeblocks, or links anywhere.]
 
 ```bash
 # Example command
 command --flag value
 ```
 
-![Screenshot description](path/to/image1.png)
-*Caption: This screenshot shows the initial reconnaissance results*
+![Screenshot](path/to/image1.png)
+*Caption: What this screenshot shows*
 
-### Step 2: [Step Name]
+[Continue with your explanation...]
 
-[Continue describing your approach and methodology.]
+### Question 1.2: [Question Text]
+
+[Your answer/explanation for Question 1.2.]
 
 ```python
 # Example Python code
@@ -44,43 +40,84 @@ def example_function():
     return "code here"
 ```
 
-![Another screenshot](path/to/image2.png)
-*Caption: Output of the script execution*
+![Another Screenshot](path/to/image2.png)
+*Caption: Description of this image*
 
-### Step 3: [Step Name]
+[More explanation...]
 
-[Add more steps as needed. Be thorough in explaining your thought process.]
+### Question 1.3: [Question Text]
+
+[Your answer/explanation for Question 1.3.]
 
 ```sql
 -- Example SQL query
 SELECT * FROM table WHERE condition;
 ```
 
-![Database results](path/to/image3.png)
-*Caption: Query results showing the extracted data*
+[Continue as needed...]
 
-### Step 4: Flag Extraction
+## Task 2: [Task Name]
 
-[Describe how you extracted or found the final flag.]
+[Description of Task 2. Add any context here.]
 
-![Flag extraction](path/to/image4.png)
-*Caption: The final flag displayed*
+### Question 2.1: [Question Text]
 
-## Flag
+[Your answer/explanation for Question 2.1.]
 
+```javascript
+// Example JavaScript code
+function example() {
+    return "code";
+}
 ```
-THM{flag_goes_here}
+
+![Task 2 Screenshot](path/to/image3.png)
+*Caption: Description*
+
+### Question 2.2: [Question Text]
+
+[Your answer/explanation for Question 2.2.]
+
+[Add images, code, or links as needed...]
+
+## Task 3: [Task Name]
+
+[Description of Task 3.]
+
+### Question 3.1: [Question Text]
+
+[Your answer/explanation.]
+
+```bash
+# Commands can go anywhere
+ls -la
+cat file.txt
 ```
 
-## Screenshots
+![Image](path/to/image4.png)
+*Caption: Image description*
 
-> **Note:** You can place images inline within any step (as shown above) or group them here at the end. Use relative paths like `./images/screenshot1.png` or absolute URLs.
+### Question 3.2: [Question Text]
 
-![Screenshot 1 Description](path/to/image1.png)
-*Caption explaining what the screenshot shows*
+[Your answer/explanation.]
 
-![Screenshot 2 Description](path/to/image2.png)
-*Caption explaining what the screenshot shows*
+## Flags
+
+### Task 1 Flags
+```
+THM{flag_for_task1_question1}
+THM{flag_for_task1_question2}
+```
+
+### Task 2 Flags
+```
+THM{flag_for_task2_question1}
+```
+
+### Task 3 Flags
+```
+THM{flag_for_task3_question1}
+```
 
 ## Tools Used
 
@@ -96,7 +133,7 @@ THM{flag_goes_here}
 
 ## Notes
 
-[Any additional notes, alternative solutions, or things you learned from this challenge can go here.]
+[Any additional notes, alternative solutions, or things you learned from this day can go here.]
 
 ---
 
@@ -107,49 +144,38 @@ THM{flag_goes_here}
 **Year:** [2024/2025]  
 **Type:** Sidequest
 
-## Challenge Description
+## Sidequest Overview
 
-[Write a brief description of the sidequest challenge here. Sidequests are optional challenges that provide additional practice and learning opportunities.]
+[Brief description of the sidequest.]
 
-![Challenge Interface](path/to/challenge_image.png)
-*Caption: Screenshot of the sidequest challenge interface*
+![Sidequest Image](path/to/image.png)
+*Caption: Description*
 
-## Files and Resources
+## Task 1: [Task Name]
 
-- [Script Name](https://github.com/your-username/repo/blob/main/script.py) - Description of what the script does
-- [File Name](https://www.dropbox.com/s/example/file.zip) - Description of the file
+[Description of Task 1.]
 
-## Solution
+### Question 1.1: [Question Text]
 
-### Step 1: [Step Name]
-
-[Describe your approach to solving the sidequest.]
+[Your answer/explanation.]
 
 ```bash
-# Example command
+# Commands
 command --flag value
 ```
 
-![Screenshot description](path/to/image1.png)
-*Caption: This screenshot shows the sidequest solution process*
+![Screenshot](path/to/image.png)
+*Caption: Description*
 
-### Step 2: [Step Name]
+### Question 1.2: [Question Text]
 
-[Continue with additional steps as needed.]
+[Your answer/explanation.]
 
-```python
-# Example Python code
-def example_function():
-    return "code here"
-```
-
-![Another screenshot](path/to/image2.png)
-*Caption: Output of the sidequest solution*
-
-## Flag
+## Flags
 
 ```
-THM{sidequest_flag_goes_here}
+THM{sidequest_flag_1}
+THM{sidequest_flag_2}
 ```
 
 ## Tools Used
@@ -159,11 +185,8 @@ THM{sidequest_flag_goes_here}
 
 ## References
 
-- [Reference Link 1](https://example.com) - Description
-- [Reference Link 2](https://example.com) - Description
+- [Reference Link](https://example.com) - Description
 
 ## Notes
 
-[Any additional notes about the sidequest can go here.]
-
-
+[Additional notes about the sidequest.]

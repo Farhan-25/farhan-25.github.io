@@ -255,6 +255,14 @@ function showWriteupPlaceholder() {
     const placeholder = document.getElementById('writeupPlaceholder');
     const display = document.getElementById('writeupDisplay');
     
+    // Clear any active challenge selection
+    document.querySelectorAll('[data-challenge-index]').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Reset current challenge index
+    currentChallengeIndex = null;
+    
     if (placeholder) placeholder.style.display = 'flex';
     if (display) display.style.display = 'none';
 }
@@ -352,5 +360,6 @@ function loadWriteup(writeupPath, type) {
 function initWriteups() {
     loadAllWriteupsData();
 }
+
 
 

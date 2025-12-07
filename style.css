@@ -1763,11 +1763,7 @@ body:has(.writeups.active) .writeup-display {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Style captions (italic text immediately after images) */
-.writeup-body img + em,
-.writeup-body img + p > em:first-child,
-.writeup-body p:has(img) + p > em:first-child,
-.writeup-body p:has(img) + p em:first-child,
+/* Style captions (only when explicitly marked with .image-caption class) */
 .writeup-body .image-caption {
   display: block;
   text-align: center;
@@ -1789,13 +1785,7 @@ body:has(.writeups.active) .writeup-display {
   margin-bottom: 0;
 }
 
-/* Style paragraph that follows image paragraph and contains italic text */
-.writeup-body p:has(img) + p {
-  margin-top: -10px;
-  text-align: center;
-}
-
-/* Style caption wrapper paragraph */
+/* Style caption wrapper paragraph (only when explicitly marked) */
 .writeup-body .image-caption-wrapper {
   margin-top: -10px !important;
   margin-bottom: 20px;
