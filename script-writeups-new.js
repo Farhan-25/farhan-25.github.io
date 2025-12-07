@@ -1,9 +1,9 @@
-// Unified Writeups System
+
 let allWriteupsData = {};
 let currentWriteupKey = null;
 let currentChallengeIndex = null;
 
-// Parse README to extract challenges (works for both CTF and AoC)
+
 function parseChallengesFromReadme(readmeContent, writeupKey, type) {
     const challenges = [];
     const lines = readmeContent.split('\n');
@@ -14,7 +14,7 @@ function parseChallengesFromReadme(readmeContent, writeupKey, type) {
         if (match) {
             const challengeName = match[1].trim();
             let folder = match[2].trim();
-            // Decode URL-encoded folder names
+            
             folder = decodeURIComponent(folder);
             
             let writeupPath;
@@ -35,7 +35,7 @@ function parseChallengesFromReadme(readmeContent, writeupKey, type) {
     return challenges;
 }
 
-// Load all writeups data
+
 async function loadAllWriteupsData() {
     const allConfigs = { ...ctfConfig, ...aocConfig };
     const promises = Object.keys(allConfigs).map(async (key) => {
@@ -68,22 +68,22 @@ async function loadAllWriteupsData() {
         allWriteupsData[result.key] = result.data;
     });
     
-    // Populate writeups index
+    
     populateWriteupsIndex();
 }
 
-// Populate writeups index page
+
 function populateWriteupsIndex() {
     const ctfGrid = document.getElementById('ctfWriteupsGrid');
     const aocGrid = document.getElementById('aocWriteupsGrid');
     
     if (!ctfGrid || !aocGrid) return;
     
-    // Clear existing content
+    
     ctfGrid.innerHTML = '';
     aocGrid.innerHTML = '';
     
-    // Populate CTF writeups
+    
     Object.keys(ctfConfig).forEach(key => {
         const writeup = allWriteupsData[key];
         if (writeup) {
@@ -92,7 +92,7 @@ function populateWriteupsIndex() {
         }
     });
     
-    // Populate AoC writeups
+    
     Object.keys(aocConfig).forEach(key => {
         const writeup = allWriteupsData[key];
         if (writeup) {
@@ -102,7 +102,7 @@ function populateWriteupsIndex() {
     });
 }
 
-// Create writeup card for index page
+
 function createWriteupCard(writeup, key) {
     const card = document.createElement('div');
     card.className = 'writeup-card';
@@ -131,7 +131,7 @@ function createWriteupCard(writeup, key) {
     return card;
 }
 
-// Show writeups index page
+
 function showWriteupsIndex() {
     const index = document.getElementById('writeupsIndex');
     const view = document.getElementById('writeupsView');
@@ -140,7 +140,7 @@ function showWriteupsIndex() {
     if (view) view.style.display = 'none';
 }
 
-// Show individual writeup view (e.g., /writeups/AoC2025)
+
 function showWriteupsView(writeupKey, challengePath = null) {
     const index = document.getElementById('writeupsIndex');
     const view = document.getElementById('writeupsView');
@@ -157,16 +157,16 @@ function showWriteupsView(writeupKey, challengePath = null) {
     
     currentWriteupKey = writeupKey;
     
-    // Show view, hide index
+    
     index.style.display = 'none';
     view.style.display = 'block';
     
-    // Set title
+    
     if (viewTitle) {
         viewTitle.textContent = writeup.name;
     }
     
-    // Back button
+    
     if (backButton) {
         backButton.onclick = () => {
             window.location.hash = 'writeups';
@@ -174,10 +174,10 @@ function showWriteupsView(writeupKey, challengePath = null) {
         };
     }
     
-    // Populate challenge list
+    
     populateChallengeList(writeup.challenges);
     
-    // If challenge path provided, load that challenge
+    
     if (challengePath) {
         const challengeIndex = writeup.challenges.findIndex(c => {
             const folderName = c.folder.replace(/\s+/g, '-');
@@ -191,7 +191,7 @@ function showWriteupsView(writeupKey, challengePath = null) {
     }
 }
 
-// Populate challenge list sidebar
+
 function populateChallengeList(challenges) {
     const challengeList = document.getElementById('challengeList');
     if (!challengeList) return;
@@ -223,7 +223,7 @@ function populateChallengeList(challenges) {
     });
 }
 
-// Select a challenge
+
 function selectChallenge(index) {
     if (!currentWriteupKey) return;
     
@@ -233,7 +233,7 @@ function selectChallenge(index) {
     currentChallengeIndex = index;
     const challenge = writeup.challenges[index];
     
-    // Update active challenge
+    
     document.querySelectorAll('[data-challenge-index]').forEach(item => {
         item.classList.remove('active');
     });
@@ -242,32 +242,32 @@ function selectChallenge(index) {
         activeButton.classList.add('active');
     }
     
-    // Update URL
+    
     const folderName = challenge.folder.replace(/\s+/g, '-');
     window.location.hash = `writeups/${currentWriteupKey}/${folderName}`;
     
-    // Load writeup
+    
     loadWriteup(challenge.writeup, writeup.type);
 }
 
-// Show placeholder
+
 function showWriteupPlaceholder() {
     const placeholder = document.getElementById('writeupPlaceholder');
     const display = document.getElementById('writeupDisplay');
     
-    // Clear any active challenge selection
+    
     document.querySelectorAll('[data-challenge-index]').forEach(item => {
         item.classList.remove('active');
     });
     
-    // Reset current challenge index
+    
     currentChallengeIndex = null;
     
     if (placeholder) placeholder.style.display = 'flex';
     if (display) display.style.display = 'none';
 }
 
-// Load and display writeup
+
 function loadWriteup(writeupPath, type) {
     const placeholder = document.getElementById('writeupPlaceholder');
     const display = document.getElementById('writeupDisplay');
@@ -288,7 +288,7 @@ function loadWriteup(writeupPath, type) {
             if (typeof marked !== 'undefined') {
                 const html = marked.parse(markdown);
                 
-                // Extract metadata
+                
                 const titleMatch = markdown.match(/^#\s+(.+)$/m);
                 const categoryMatch = markdown.match(/\*\*Category:\*\*\s+(.+)/);
                 const difficultyMatch = markdown.match(/\*\*Difficulty:\*\*\s+(.+)/);
@@ -356,7 +356,7 @@ function loadWriteup(writeupPath, type) {
         });
 }
 
-// Initialize writeups system
+
 function initWriteups() {
     loadAllWriteupsData();
 }
