@@ -26,10 +26,24 @@ function handleNavClick() {
     }
 
     
-    if (targetPage === 'writeups') {
+    if (targetPage === 'writeups' || targetPage === 'codeforces') {
         if (sidebar) sidebar.style.display = 'none';
     } else {
         if (sidebar) sidebar.style.display = '';
+    }
+    
+    if (targetPage === 'codeforces') {
+        const hash = window.location.hash.substring(1);
+        if (hash === 'codeforces' || hash.startsWith('codeforces/')) {
+            setTimeout(async () => {
+                await handleCodeforcesRoute();
+            }, 100);
+        } else {
+            setTimeout(async () => {
+                await initCodeforces();
+                await showCodeforcesIndex();
+            }, 100);
+        }
     }
     
     
@@ -48,8 +62,22 @@ function handleHashRoute() {
     const hash = window.location.hash.substring(1); 
     
     
-    if (!hash || (hash !== 'writeups' && !hash.startsWith('writeups/'))) {
+    if (!hash || (hash !== 'writeups' && !hash.startsWith('writeups/') && hash !== 'codeforces' && !hash.startsWith('codeforces/'))) {
         
+        return;
+    }
+    
+    
+    if (hash === 'codeforces' || hash.startsWith('codeforces/')) {
+        const codeforcesLink = Array.from(navLinks).find(link => 
+            link.getAttribute('data-nav-link') === 'codeforces'
+        );
+        if (codeforcesLink && !codeforcesLink.classList.contains('active')) {
+            codeforcesLink.click();
+        }
+        setTimeout(() => {
+            handleCodeforcesRoute();
+        }, 100);
         return;
     }
     
@@ -182,10 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     initWriteups();
+    initCodeforces();
     
     
     const initialHash = window.location.hash.substring(1);
-    if (initialHash === 'writeups' || initialHash.startsWith('writeups/')) {
+    if (initialHash === 'writeups' || initialHash.startsWith('writeups/') || initialHash === 'codeforces' || initialHash.startsWith('codeforces/')) {
         handleHashRoute();
     }
 });
@@ -194,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('hashchange', function() {
     const hash = window.location.hash.substring(1);
     
-    if (hash === 'writeups' || hash.startsWith('writeups/')) {
+    if (hash === 'writeups' || hash.startsWith('writeups/') || hash === 'codeforces' || hash.startsWith('codeforces/')) {
         handleHashRoute();
     }
     
@@ -1267,4 +1296,222 @@ function loadWriteupUnified(writeupPath, type) {
 
 function initWriteups() {
     loadAllWriteupsData();
+}
+
+let codeforcesSolutions = {};
+
+let allCodeforcesSolutions = [];
+let filteredSolutions = [];
+
+async function loadCodeforcesSolutions() {
+    if (Object.keys(codeforcesSolutions).length > 0) {
+        return codeforcesSolutions;
+    }
+    
+    try {
+        const response = await fetch('Codeforces/solutions.json');
+        if (!response.ok) {
+            throw new Error('Failed to load solutions');
+        }
+        codeforcesSolutions = await response.json();
+        return codeforcesSolutions;
+    } catch (error) {
+        console.error('Error loading Codeforces solutions:', error);
+        return {};
+    }
+}
+
+function getCodeforcesSolutions() {
+    return Object.keys(codeforcesSolutions).map(name => ({
+        name: name,
+        code: codeforcesSolutions[name],
+        urlName: name.replace(/\s+/g, '-')
+    })).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+async function showCodeforcesIndex() {
+    const index = document.getElementById('codeforcesIndex');
+    const view = document.getElementById('codeforcesView');
+    
+    if (index) index.style.display = 'block';
+    if (view) view.style.display = 'none';
+    
+    await populateCodeforcesList();
+}
+
+async function populateCodeforcesList() {
+    const list = document.getElementById('codeforcesList');
+    if (!list) return;
+    
+    await loadCodeforcesSolutions();
+    
+    if (allCodeforcesSolutions.length === 0) {
+        allCodeforcesSolutions = getCodeforcesSolutions();
+        filteredSolutions = [...allCodeforcesSolutions];
+    }
+    
+    list.innerHTML = '';
+    
+    const solutions = filteredSolutions.length > 0 ? filteredSolutions : allCodeforcesSolutions;
+    
+    if (solutions.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'no-selection';
+        li.textContent = 'No solutions found';
+        list.appendChild(li);
+        return;
+    }
+    
+    solutions.forEach(solution => {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.className = 'codeforces-item';
+        button.addEventListener('click', () => {
+            window.location.hash = `codeforces/${solution.urlName}`;
+            showCodeforcesSolution(solution.name);
+        });
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'codeforces-item-name';
+        nameSpan.textContent = solution.name;
+        
+        const langSpan = document.createElement('span');
+        langSpan.className = 'codeforces-item-lang';
+        langSpan.textContent = 'Python';
+        
+        button.appendChild(nameSpan);
+        button.appendChild(langSpan);
+        li.appendChild(button);
+        list.appendChild(li);
+    });
+}
+
+function showCodeforcesSolution(challengeName) {
+    const index = document.getElementById('codeforcesIndex');
+    const view = document.getElementById('codeforcesView');
+    const viewTitle = document.getElementById('codeforcesViewTitle');
+    const codeContent = document.getElementById('codeContentMain');
+    const backButton = document.getElementById('codeforcesBackButton');
+    
+    if (!index || !view) return;
+    
+    const solution = codeforcesSolutions[challengeName];
+    if (!solution) {
+        console.warn(`Solution for ${challengeName} not found`);
+        return;
+    }
+    
+    index.style.display = 'none';
+    view.style.display = 'block';
+    
+    if (viewTitle) viewTitle.textContent = challengeName;
+    if (codeContent) codeContent.textContent = solution;
+    
+    if (backButton) {
+        const newBackButton = backButton.cloneNode(true);
+        backButton.parentNode.replaceChild(newBackButton, backButton);
+        
+        newBackButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = 'codeforces';
+            setTimeout(() => {
+                showCodeforcesIndex();
+            }, 50);
+        });
+    }
+    
+    const copyBtn = document.getElementById('copyCodeBtnMain');
+    if (copyBtn) {
+        const newCopyBtn = copyBtn.cloneNode(true);
+        copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
+        
+        newCopyBtn.addEventListener('click', async () => {
+            const codeText = solution;
+            try {
+                await navigator.clipboard.writeText(codeText);
+                const originalHTML = newCopyBtn.innerHTML;
+                newCopyBtn.innerHTML = '<ion-icon name="checkmark-outline"></ion-icon><span>Copied!</span>';
+                newCopyBtn.classList.add('copied');
+                setTimeout(() => {
+                    newCopyBtn.innerHTML = originalHTML;
+                    newCopyBtn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                const textArea = document.createElement('textarea');
+                textArea.value = codeText;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    const originalHTML = newCopyBtn.innerHTML;
+                    newCopyBtn.innerHTML = '<ion-icon name="checkmark-outline"></ion-icon><span>Copied!</span>';
+                    newCopyBtn.classList.add('copied');
+                    setTimeout(() => {
+                        newCopyBtn.innerHTML = originalHTML;
+                        newCopyBtn.classList.remove('copied');
+                    }, 2000);
+                } catch (fallbackErr) {
+                    console.error('Failed to copy code:', fallbackErr);
+                }
+                document.body.removeChild(textArea);
+            }
+        });
+    }
+}
+
+async function handleCodeforcesRoute() {
+    await loadCodeforcesSolutions();
+    
+    const hash = window.location.hash.substring(1);
+    
+    if (hash === 'codeforces') {
+        await showCodeforcesIndex();
+        return;
+    }
+    
+    if (hash.startsWith('codeforces/')) {
+        const parts = hash.split('/');
+        if (parts.length >= 2) {
+            const challengeUrlName = parts.slice(1).join('/');
+            const challengeName = challengeUrlName.replace(/-/g, ' ');
+            
+            const solution = codeforcesSolutions[challengeName];
+            if (solution) {
+                showCodeforcesSolution(challengeName);
+            } else {
+                await showCodeforcesIndex();
+            }
+        }
+    }
+}
+
+async function initCodeforces() {
+    await loadCodeforcesSolutions();
+    
+    if (allCodeforcesSolutions.length === 0) {
+        allCodeforcesSolutions = getCodeforcesSolutions();
+        filteredSolutions = [...allCodeforcesSolutions];
+    }
+    
+    const searchInput = document.getElementById('codeforcesSearch');
+    if (searchInput && !searchInput.hasAttribute('data-listener-attached')) {
+        searchInput.setAttribute('data-listener-attached', 'true');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                filteredSolutions = [...allCodeforcesSolutions];
+            } else {
+                filteredSolutions = allCodeforcesSolutions.filter(solution =>
+                    solution.name.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            populateCodeforcesList();
+        });
+    }
+    
+    populateCodeforcesList();
 }
