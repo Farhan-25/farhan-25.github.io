@@ -1,0 +1,24 @@
+{
+  "Beautiful Matrix": "matrix = []\n\nfor _ in range(5):\n    matrix.append(list(map(int, input().split())))\n\nfor i in range(5):\n    for j in range(5):\n        if matrix[i][j] == 1:\n            print(abs(i - 2) + abs(j - 2))",
+  "Bit++": "t = int(input())\nx = 0\nfor _ in range(t):\n    s = input()\n    if \"++\" in s:\n        x += 1\n    elif \"--\" in s:\n        x -= 1\nprint(x)",
+  "Boy or Girl": "t = input().strip()\n\ncount = len(set(t))\n\nif count % 2 == 0:\n    print(\"CHAT WITH HER!\")\nelse:\n    print(\"IGNORE HIM!\")",
+  "Domino piling": "m , n = map(int , input().split())\n\ntiles = (m*n) // 2\nprint(tiles)",
+  "Elephant": "x = int(input())\nprint((x + 4) // 5)",
+  "Football": "s = input()\n\nif \"0000000\" in s or \"1111111\" in s:\n    print(\"YES\")\nelse:\n    print(\"NO\")\n",
+  "Helpful Maths": "e = input().split(\"+\")   \ne.sort()\nword = \"+\".join(e)\nprint(word)",
+  "Nearly Lucky Number": "n = input()\n\ncount = 0\nfor i in n:\n    if i == '4' or i == '7':\n        count += 1\n\nif count == 4 or count == 7:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
+  "Next Round": "n, k = map(int, input().split())\nscores = list(map(int, input().split()))\n\ncutoff = scores[k - 1]\ncount = 0\n\nfor score in scores:\n    if score >= cutoff and score > 0:\n        count += 1\n\nprint(count)",
+  "Petya and Strings": "aa = input()\nbb = input()\na = aa.lower()\nb = bb.lower()\nif(a<b):\n    print(\"-1\")\nelif(a>b):\n    print(\"1\")\nelse:\n    print(\"0\")",
+  "Soldiers and Bananas": "k , n , w = map(int , input().split())\nsum = (w*(w+1))/2\namount = k * sum\nborrowed_money = int(amount - n)\nif(borrowed_money <=0 ):\n    print(\"0\")\nelse:\n    print(borrowed_money)",
+  "Stones on the Table": "n = int(input())\ns = input()\ncount = 0\nfor i in range(1,n):\n    if(s[i] == s[i-1]):\n        count += 1\nprint(count)\n    ",
+  "String Task": "s = input().lower()\nvowels = [\"a\", \"o\", \"y\", \"e\", \"u\", \"i\"]\nfor v in vowels:\n    s = s.replace(v, \"\")\nresult = \"\"\nfor ch in s:\n    result += \".\" + ch\nprint(result)",
+  "Team": "t = int(input())\ncount = 0\nfor _ in range(t):\n    pet,vas,ton = map(int , input().split())\n    if pet+vas+ton >= 2:\n        count += 1       \nprint(count)",
+  "Theater Square": "n, m, a = map(int, input().split())\n\ntiles_n = (n + a - 1) // a\ntiles_m = (m + a - 1) // a\n\nprint(tiles_n * tiles_m)",
+  "Watermelon": "w = int(input())\nif w%2==0 and w>2:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
+  "Way Too Long Words": "t = int(input())\nfor _ in range(t):\n    s = input()\n    l = len(s)\n    if l>10:\n        print(s[0]+str(l-2)+s[-1])\n    else:\n        print(s)",
+  "Word Capitalization": "word = input().strip()\nprint(word[0].upper() + word[1:])",
+  "Word": "s = input()\nlower_count = 0\nupper_count = 0\nfor ch in s:\n    if(ch.islower() == True):\n        lower_count += 1\n    else:\n        upper_count += 1\nif(lower_count >= upper_count):\n    print(s.lower())\nelse:\n    print(s.upper())",
+  "Wrong Subtraction": "n , k = map(int , input().split())\nfor _ in range(k):\n    unit_place = n % 10\n    if(unit_place > 0):\n        unit_place -= 1\n        n = n - 1\n    else:\n        n = int(n/10)\nprint(n)",
+  "Young Physicist": "n = int(input())\n\nsum_x = 0\nsum_y = 0\nsum_z = 0\n\nfor _ in range(n):\n    x, y, z = map(int, input().split())\n    sum_x += x\n    sum_y += y\n    sum_z += z\n\nif sum_x == 0 and sum_y == 0 and sum_z == 0:\n    print(\"YES\")\nelse:\n    print(\"NO\")"
+}
+
