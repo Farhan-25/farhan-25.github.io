@@ -1256,17 +1256,12 @@ main {
 }
 
 
-body:has(.writeups.active) .main-content {
-  width: 100%;
-  max-width: 100%;
-  min-width: 100%;
-}
 
 body:has(.writeups.active) .writeups-container {
   max-width: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 1fr;
   gap: 30px;
   align-items: start;
 }
@@ -1287,8 +1282,6 @@ body:has(.writeups.active) .writeup-content {
   width: 100%;
 }
 
-
-
 body:has(.writeups.active) .writeup-body {
   max-width: 100%;
   width: 100%;
@@ -1303,16 +1296,70 @@ body:has(.writeups.active) .writeup-display {
   opacity: 1;
 }
 
+body:has(.writeups.active) .writeups-sidebar-right {
+  display: none;
+}
 
 @media (min-width: 1200px) {
-  body:has(.writeups.active) .writeups-container {
-    grid-template-columns: 1fr 300px;
-    gap: 40px;
-  }
-
   body:has(.writeups.active) .writeup-body {
     font-size: var(--fs-5);
     line-height: 1.8;
+  }
+  
+  body:has(.writeups.active) .writeup-content-main {
+    padding: 40px;
+  }
+}
+
+
+
+body:has(.vulnhub.active) .writeups-container {
+  max-width: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+body:has(.vulnhub.active) .writeup-content-main {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+  display: block !important;
+  visibility: visible;
+  opacity: 1;
+  align-self: stretch;
+}
+
+body:has(.vulnhub.active) .writeup-content {
+  max-width: 100%;
+  width: 100%;
+}
+
+body:has(.vulnhub.active) .writeup-body {
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+body:has(.vulnhub.active) .writeup-display {
+  max-width: 100%;
+  width: 100%;
+  display: block !important;
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (min-width: 1200px) {
+  body:has(.vulnhub.active) .writeup-body {
+    font-size: var(--fs-5);
+    line-height: 1.8;
+  }
+  
+  body:has(.vulnhub.active) .writeup-content-main {
+    padding: 40px;
   }
 }
 
@@ -2105,10 +2152,6 @@ body:has(.writeups.active) .writeup-display {
     display: none;
   }
 
-  body:has(.writeups.active) .main-content {
-    width: 100%;
-    max-width: 100%;
-  }
 
   .cert-modal-content {
     width: 95%;
@@ -2246,10 +2289,6 @@ body:has(.writeups.active) .writeup-display {
     display: none;
   }
 
-  body:has(.writeups.active) .main-content {
-    width: 100%;
-    max-width: 100%;
-  }
 
 }
 
@@ -2292,16 +2331,22 @@ body:has(.writeups.active) .writeup-display {
     margin: 0;
   }
 
-  
-  body:has(.writeups.active) .main-content {
-    width: 100%;
-    min-width: 100%;
+  body:has(.writeups.active) .main-content,
+  body:has(.vulnhub.active) .main-content,
+  body:has(.codeforces.active) .main-content {
+    width: 75%;
+    min-width: 75%;
+    max-width: 75%;
+    margin: 0 auto;
+  }
+
+  body:has(.writeups.active) main,
+  body:has(.vulnhub.active) main,
+  body:has(.codeforces.active) main {
     max-width: 100%;
   }
 
-  body:has(.writeups.active) main {
-    max-width: 100%;
-  }
+  
 
   .sidebar {
     position: sticky;
