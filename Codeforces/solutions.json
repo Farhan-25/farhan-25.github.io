@@ -22,4 +22,3 @@
   "Young Physicist": "n = int(input())\n\nsum_x = 0\nsum_y = 0\nsum_z = 0\n\nfor _ in range(n):\n    x, y, z = map(int, input().split())\n    sum_x += x\n    sum_y += y\n    sum_z += z\n\nif sum_x == 0 and sum_y == 0 and sum_z == 0:\n    print(\"YES\")\nelse:\n    print(\"NO\")"
 }
 
-

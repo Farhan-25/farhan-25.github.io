@@ -26,7 +26,7 @@ function handleNavClick() {
     }
 
     
-    if (targetPage === 'writeups' || targetPage === 'codeforces' || targetPage === 'vulnhub') {
+    if (targetPage === 'writeups' || targetPage === 'codeforces') {
         if (sidebar) sidebar.style.display = 'none';
     } else {
         if (sidebar) sidebar.style.display = '';
@@ -49,18 +49,6 @@ function handleNavClick() {
     
     if (targetPage === 'writeups') {
         
-    } else if (targetPage === 'vulnhub') {
-        const hash = window.location.hash.substring(1);
-        if (hash === 'vulnhub' || hash.startsWith('vulnhub/')) {
-            setTimeout(async () => {
-                await handleVulnhubRoute();
-            }, 100);
-        } else {
-            setTimeout(async () => {
-                await initVulnhub();
-                await showVulnhubIndex();
-            }, 100);
-        }
     } else {
         
         if (window.location.hash) {
@@ -74,7 +62,7 @@ function handleHashRoute() {
     const hash = window.location.hash.substring(1); 
     
     
-    if (!hash || (hash !== 'writeups' && !hash.startsWith('writeups/') && hash !== 'codeforces' && !hash.startsWith('codeforces/') && hash !== 'vulnhub' && !hash.startsWith('vulnhub/'))) {
+    if (!hash || (hash !== 'writeups' && !hash.startsWith('writeups/') && hash !== 'codeforces' && !hash.startsWith('codeforces/'))) {
         
         return;
     }
@@ -89,19 +77,6 @@ function handleHashRoute() {
         }
         setTimeout(() => {
             handleCodeforcesRoute();
-        }, 100);
-        return;
-    }
-    
-    if (hash === 'vulnhub' || hash.startsWith('vulnhub/')) {
-        const vulnhubLink = Array.from(navLinks).find(link => 
-            link.getAttribute('data-nav-link') === 'vulnhub'
-        );
-        if (vulnhubLink && !vulnhubLink.classList.contains('active')) {
-            vulnhubLink.click();
-        }
-        setTimeout(() => {
-            handleVulnhubRoute();
         }, 100);
         return;
     }
@@ -236,11 +211,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initWriteups();
     initCodeforces();
-    initVulnhub();
     
     
     const initialHash = window.location.hash.substring(1);
-    if (initialHash === 'writeups' || initialHash.startsWith('writeups/') || initialHash === 'codeforces' || initialHash.startsWith('codeforces/') || initialHash === 'vulnhub' || initialHash.startsWith('vulnhub/')) {
+    if (initialHash === 'writeups' || initialHash.startsWith('writeups/') || initialHash === 'codeforces' || initialHash.startsWith('codeforces/')) {
         handleHashRoute();
     }
 });
@@ -249,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('hashchange', function() {
     const hash = window.location.hash.substring(1);
     
-    if (hash === 'writeups' || hash.startsWith('writeups/') || hash === 'codeforces' || hash.startsWith('codeforces/') || hash === 'vulnhub' || hash.startsWith('vulnhub/')) {
+    if (hash === 'writeups' || hash.startsWith('writeups/') || hash === 'codeforces' || hash.startsWith('codeforces/')) {
         handleHashRoute();
     }
     
@@ -271,15 +245,6 @@ const aocConfig = {
         name: 'Advent of Cyber 2025',
         readme: 'CTF-Writeups/AoC2025/README.md',
         type: 'aoc'
-    }
-};
-
-
-const vulnhubConfig = {
-    'Vulnhub': {
-        name: 'Vulnhub Labs',
-        readme: 'Vulnhub/README.md',
-        type: 'vulnhub'
     }
 };
 
@@ -975,13 +940,7 @@ function parseChallengesFromReadmeUnified(readmeContent, writeupKey) {
             const challengeName = match[1].trim();
             let folder = match[2].trim();
             folder = decodeURIComponent(folder);
-            
-            let writeupPath;
-            if (writeupKey === 'Vulnhub') {
-                writeupPath = `Vulnhub/${folder}/writeup.md`;
-            } else {
-                writeupPath = `CTF-Writeups/${writeupKey}/${folder}/writeup.md`;
-            }
+            const writeupPath = `CTF-Writeups/${writeupKey}/${folder}/writeup.md`;
             
             challenges.push({
                 name: challengeName,
@@ -1555,262 +1514,4 @@ async function initCodeforces() {
     }
     
     populateCodeforcesList();
-}
-
-
-let vulnhubData = {};
-let selectedVulnhubLab = null;
-let selectedVulnhubChallenge = null;
-
-async function loadVulnhubData() {
-    const promises = Object.keys(vulnhubConfig).map(async (vulnhubKey) => {
-        const config = vulnhubConfig[vulnhubKey];
-        try {
-            const response = await fetch(config.readme);
-            if (!response.ok) {
-                console.warn(`Failed to load README for ${vulnhubKey}`);
-                return { key: vulnhubKey, challenges: [] };
-            }
-            const readmeContent = await response.text();
-            const challenges = parseChallengesFromReadmeUnified(readmeContent, vulnhubKey);
-            
-            return {
-                key: vulnhubKey,
-                data: {
-                    name: config.name,
-                    challenges: challenges,
-                    type: config.type
-                }
-            };
-        } catch (error) {
-            console.error(`Error loading ${vulnhubKey} README:`, error);
-            return { key: vulnhubKey, data: { name: config.name, challenges: [], type: config.type } };
-        }
-    });
-    
-    const results = await Promise.all(promises);
-    
-    results.forEach(result => {
-        vulnhubData[result.key] = result.data;
-    });
-    
-    populateVulnhubList();
-}
-
-function populateVulnhubList() {
-    const vulnhubGrid = document.getElementById('vulnhubWriteupsGrid');
-    if (!vulnhubGrid) return;
-    
-    vulnhubGrid.innerHTML = '';
-    
-    Object.keys(vulnhubData).forEach(vulnhubKey => {
-        const vulnhub = vulnhubData[vulnhubKey];
-        vulnhub.challenges.forEach(challenge => {
-            const card = createVulnhubLabCard(challenge, vulnhubKey);
-            vulnhubGrid.appendChild(card);
-        });
-    });
-}
-
-function createVulnhubLabCard(challenge, vulnhubKey) {
-    const card = document.createElement('div');
-    card.className = 'writeup-card';
-    card.setAttribute('data-lab-name', challenge.name);
-    card.style.cursor = 'pointer';
-    
-    card.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const vulnhubLink = Array.from(navLinks).find(link => 
-            link.getAttribute('data-nav-link') === 'vulnhub'
-        );
-        if (vulnhubLink && !vulnhubLink.classList.contains('active')) {
-            vulnhubLink.click();
-        }
-        
-        const folderName = challenge.folder.replace(/\s+/g, '-');
-        window.location.hash = `vulnhub/${vulnhubKey}/${folderName}`;
-        
-        setTimeout(() => {
-            showVulnhubLabWriteup(challenge, vulnhubKey);
-        }, 150);
-    });
-    
-    card.innerHTML = `
-        <div class="writeup-card-header">
-            <ion-icon name="shield-outline"></ion-icon>
-            <h4 class="writeup-card-title">${challenge.name}</h4>
-        </div>
-        <p class="writeup-card-description">
-            Click to view writeup
-        </p>
-        <div class="writeup-card-count">
-            <ion-icon name="document-text-outline"></ion-icon>
-            <span>View Writeup</span>
-        </div>
-    `;
-    
-    return card;
-}
-
-function showVulnhubIndex() {
-    const index = document.getElementById('vulnhubIndex');
-    const view = document.getElementById('vulnhubView');
-    
-    if (index) index.style.display = 'block';
-    if (view) view.style.display = 'none';
-}
-
-function showVulnhubLabWriteup(challenge, vulnhubKey) {
-    const index = document.getElementById('vulnhubIndex');
-    const view = document.getElementById('vulnhubView');
-    const viewTitle = document.getElementById('vulnhubViewTitle');
-    const backButton = document.getElementById('vulnhubBackButton');
-    const display = document.getElementById('vulnhubWriteupDisplay');
-    
-    if (!index || !view) return;
-    
-    index.style.display = 'none';
-    view.style.display = 'block';
-    if (display) display.style.display = 'block';
-    
-    if (viewTitle) viewTitle.textContent = challenge.name;
-    
-    if (backButton) {
-        const newBackButton = backButton.cloneNode(true);
-        backButton.parentNode.replaceChild(newBackButton, backButton);
-        
-        newBackButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.hash = 'vulnhub';
-            setTimeout(() => {
-                showVulnhubIndex();
-            }, 50);
-        });
-    }
-    
-    loadVulnhubWriteup(challenge.writeup);
-}
-
-
-function loadVulnhubWriteup(writeupPath) {
-    const placeholder = document.getElementById('vulnhubWriteupPlaceholder');
-    const display = document.getElementById('vulnhubWriteupDisplay');
-    const writeupTitle = document.getElementById('vulnhubWriteupTitle');
-    const writeupMeta = document.getElementById('vulnhubWriteupMeta');
-    const writeupBody = document.getElementById('vulnhubWriteupBody');
-    
-    if (placeholder) placeholder.style.display = 'none';
-    if (display) display.style.display = 'block';
-    if (writeupBody) writeupBody.innerHTML = '<p>Loading writeup...</p>';
-    
-    fetch(writeupPath)
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to load writeup');
-            return response.text();
-        })
-        .then(markdown => {
-            if (typeof marked !== 'undefined') {
-                const html = marked.parse(markdown);
-                
-                const titleMatch = markdown.match(/^#\s+(.+)$/m);
-                const categoryMatch = markdown.match(/\*\*Category:\*\*\s+(.+)/);
-                const difficultyMatch = markdown.match(/\*\*Difficulty:\*\*\s+(.+)/);
-                const labMatch = markdown.match(/\*\*Lab:\*\*\s+(.+)/);
-                const typeMatch = markdown.match(/\*\*Type:\*\*\s+(.+)/);
-                
-                if (writeupTitle && titleMatch) {
-                    writeupTitle.textContent = titleMatch[1];
-                }
-                
-                if (writeupMeta) {
-                    writeupMeta.innerHTML = '';
-                    
-                    if (categoryMatch) {
-                        const badge = document.createElement('span');
-                        badge.className = 'meta-badge category';
-                        badge.textContent = `Category: ${categoryMatch[1].trim()}`;
-                        writeupMeta.appendChild(badge);
-                    }
-                    
-                    if (difficultyMatch) {
-                        const badge = document.createElement('span');
-                        const difficulty = difficultyMatch[1].trim().toLowerCase();
-                        badge.className = `meta-badge difficulty ${difficulty}`;
-                        badge.textContent = `Difficulty: ${difficultyMatch[1].trim()}`;
-                        writeupMeta.appendChild(badge);
-                    }
-                    
-                    if (labMatch) {
-                        const badge = document.createElement('span');
-                        badge.className = 'meta-badge';
-                        badge.textContent = `Lab: ${labMatch[1].trim()}`;
-                        writeupMeta.appendChild(badge);
-                    }
-                    
-                    if (typeMatch) {
-                        const badge = document.createElement('span');
-                        badge.className = 'meta-badge';
-                        badge.textContent = `Type: ${typeMatch[1].trim()}`;
-                        writeupMeta.appendChild(badge);
-                    }
-                }
-                
-                if (writeupBody) {
-                    writeupBody.innerHTML = html;
-                    fixRelativePaths(writeupBody, writeupPath);
-                    processImagesAndCaptions(writeupBody);
-                    addCopyButtonsToCodeBlocks(writeupBody);
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error loading Vulnhub writeup:', error);
-            if (writeupBody) {
-                writeupBody.innerHTML = `<p style="color: var(--bittersweet-shimmer);">Error loading writeup: ${error.message}</p>`;
-            }
-        });
-}
-
-async function handleVulnhubRoute() {
-    await loadVulnhubData();
-    
-    const hash = window.location.hash.substring(1);
-    
-    if (hash === 'vulnhub') {
-        await showVulnhubIndex();
-        return;
-    }
-    
-    if (hash.startsWith('vulnhub/')) {
-        const parts = hash.split('/');
-        if (parts.length >= 3) {
-            const vulnhubKey = parts[1];
-            const challengePath = parts.slice(2).join('/');
-            
-            if (vulnhubData[vulnhubKey]) {
-                const vulnhub = vulnhubData[vulnhubKey];
-                const challenge = vulnhub.challenges.find(c => {
-                    const folderName = c.folder.replace(/\s+/g, '-');
-                    return folderName === challengePath || c.folder === challengePath;
-                });
-                
-                if (challenge) {
-                    showVulnhubLabWriteup(challenge, vulnhubKey);
-                } else {
-                    await showVulnhubIndex();
-                }
-            } else {
-                await showVulnhubIndex();
-            }
-        } else {
-            await showVulnhubIndex();
-        }
-    }
-}
-
-async function initVulnhub() {
-    await loadVulnhubData();
-    populateVulnhubList();
 }
