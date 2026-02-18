@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Codeforces</title>
+  <link rel="shortcut icon" href="https://via.placeholder.com/32x32/333333/ffffff?text=F" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <div id="sidebar-container"></div>
+    <div class="main-content">
+      <div id="navbar-container"></div>
+      <article class="codeforces active" data-page="codeforces">
+
+        <header>
+          <h2 class="h2 article-title">Codeforces Solutions</h2>
+        </header>
+
+        <div class="codeforces-index" id="codeforcesIndex">
+          <div class="codeforces-index-content">
+            <div class="codeforces-intro">
+              <p>
+                Welcome to my Codeforces solutions! Here you can find my solutions to various competitive programming
+                problems.
+              </p>
+            </div>
+
+            <div class="codeforces-search-container">
+              <div class="search-box">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" id="codeforcesSearch" placeholder="Search solutions..." class="search-input">
+              </div>
+            </div>
+
+            <div class="codeforces-list-container">
+              <ul class="codeforces-list" id="codeforcesList">
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="codeforces-view" id="codeforcesView" style="display: none;">
+          <div class="codeforces-view-header">
+            <a href="#codeforces" class="back-button" id="codeforcesBackButton">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+              <span>Back to Solutions</span>
+            </a>
+            <h3 class="h3 codeforces-view-title" id="codeforcesViewTitle"></h3>
+          </div>
+
+          <div class="codeforces-container">
+            <main class="codeforces-content-main">
+              <div class="code-display-wrapper">
+                <div class="code-display-header">
+                  <span class="code-language">Python</span>
+                  <button class="copy-code-btn-main" id="copyCodeBtnMain">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <div class="code-display-main">
+                  <pre><code id="codeContentMain"></code></pre>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+
+      </article>
+    </div>
+  </main>
+  <script src="script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

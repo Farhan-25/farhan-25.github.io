@@ -1627,7 +1627,7 @@ main {
     margin-inline: auto;
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 25px;
   }
 
@@ -1641,7 +1641,7 @@ main {
     position: sticky;
     top: 60px;
     max-height: max-content;
-    height: 100%;
+    height: auto;
     margin-bottom: 0;
     padding-top: 60px;
     z-index: 1;
@@ -1956,4 +1956,275 @@ main {
   .code-display-main code {
     font-size: var(--fs-6);
   }
+}
+
+/*-----------------------------------*\
+  #OPEN SOURCE
+\*-----------------------------------*/
+
+.opensource-intro {
+  margin-bottom: 30px;
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  line-height: 1.6;
+}
+
+.opensource-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.opensource-item {
+  background: var(--border-gradient-onyx);
+  border: 1px solid var(--jet);
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: var(--shadow-2);
+  transition: var(--transition-1);
+  position: relative;
+  z-index: 1;
+}
+
+.opensource-item::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.opensource-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-3);
+  border-color: var(--orange-yellow-crayola);
+}
+
+.opensource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.opensource-title {
+  color: var(--white-2);
+  font-size: var(--fs-4);
+  font-weight: var(--fw-600);
+  line-height: 1.3;
+  transition: var(--transition-1);
+}
+
+.opensource-title:hover {
+  color: var(--orange-yellow-crayola);
+}
+
+.opensource-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.opensource-lang {
+  color: var(--orange-yellow-crayola);
+  font-size: var(--fs-8);
+  font-weight: var(--fw-500);
+  background: var(--jet);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.opensource-description {
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.opensource-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.view-repo-btn {
+  background: none;
+  color: var(--orange-yellow-crayola);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  padding: 8px 0;
+  transition: var(--transition-1);
+  cursor: pointer;
+}
+
+.view-repo-btn:hover {
+  color: var(--white-2);
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .opensource-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/*-----------------------------------*\
+  #OPEN SOURCE DETAIL
+\*-----------------------------------*/
+
+.opensource-detail {
+  padding-bottom: 20px;
+  animation: fade 0.5s ease backwards;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--border-gradient-onyx);
+  color: var(--orange-yellow-crayola);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-1);
+  transition: var(--transition-1);
+}
+
+.back-btn:hover {
+  background: var(--bg-gradient-yellow-1);
+  color: var(--smoky-black); 
+}
+
+.project-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.github-repo-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--white-2);
+  font-size: var(--fs-6);
+  padding: 8px 16px;
+  background: var(--jet);
+  border-radius: 8px;
+  transition: var(--transition-1);
+}
+
+.github-repo-link:hover {
+  color: var(--orange-yellow-crayola);
+  background: var(--eerie-black-1);
+}
+
+.project-description {
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.opensource-pr-status.merged {
+  color: hsl(134, 61%, 50%);
+  background: hsla(134, 61%, 50%, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.opensource-pr-status.open {
+  color: var(--orange-yellow-crayola);
+  background: hsla(45, 100%, 71%, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.opensource-github-link {
+  font-size: 22px;
+  color: var(--white-2);
+  transition: var(--transition-1);
+  display: flex;
+  align-items: center;
+}
+
+.opensource-github-link:hover {
+  color: var(--orange-yellow-crayola);
+}
+
+/* Update meta to align items */
+.opensource-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.opensource-pr-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.opensource-pr-item {
+  background: var(--border-gradient-onyx);
+  border: 1px solid var(--jet);
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+  transition: var(--transition-1);
+}
+
+.opensource-pr-item::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.opensource-pr-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--orange-yellow-crayola);
+}
+
+.opensource-pr-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  width: 100%;
+  color: var(--white-2);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  gap: 15px;
+}
+
+.opensource-pr-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.opensource-pr-status {
+  font-size: var(--fs-7);
+  font-weight: var(--fw-600);
+  white-space: nowrap;
+}
+
+.opensource-detail .h3 {
+  margin-bottom: 20px;
 }

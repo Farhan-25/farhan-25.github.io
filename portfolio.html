@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Portfolio</title>
+  <link rel="shortcut icon" href="https://via.placeholder.com/32x32/333333/ffffff?text=F" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <div id="sidebar-container"></div>
+    <div class="main-content">
+      <div id="navbar-container"></div>
+      <article class="portfolio active" data-page="portfolio">
+
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+
+        <section class="portfolio-content">
+          <div class="portfolio-intro">
+            <p>
+              Welcome to my portfolio! Here you can preview and download my resume.
+            </p>
+          </div>
+
+          <div class="resume-viewer">
+            <div class="viewer-controls">
+              <div class="viewer-info">
+                <h4>Resume Preview</h4>
+                <p>View my professional resume below</p>
+              </div>
+              <div class="download-controls">
+                <a href="Resume.pdf" download class="download-btn">
+                  <ion-icon name="download-outline"></ion-icon>
+                  Download PDF
+                </a>
+              </div>
+            </div>
+
+            <div class="resume-container">
+              <iframe src="Resume.pdf" class="document-preview" title="Resume Preview">
+                <div class="preview-fallback">
+                  <div class="preview-placeholder">
+                    <ion-icon name="document-outline"></ion-icon>
+                    <h3>Resume Preview</h3>
+                    <p>Your browser doesn't support PDF preview directly.</p>
+                    <div class="preview-actions">
+                      <a href="Resume.pdf" target="_blank" class="preview-btn">
+                        <ion-icon name="open-outline"></ion-icon>
+                        Open PDF in New Tab
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </iframe>
+            </div>
+
+          </div>
+        </section>
+
+      </article>
+    </div>
+  </main>
+  <script src="script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
