@@ -1,0 +1,161 @@
+{
+  "rizinorg-rizin": {
+    "title": "rizin",
+    "repoName": "rizinorg/rizin",
+    "repoUrl": "https://github.com/rizinorg/rizin",
+    "lang": "C",
+    "description": "UNIX-like reverse engineering framework and command-line toolset.",
+    "prs": [
+      {
+        "title": "Test for read_*_leb128 functions",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5931",
+        "updatedAt": "2026-02-19T20:25:00Z"
+      },
+      {
+        "title": "Parse numpy NPY files",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/rizin/pull/5944",
+        "updatedAt": "2026-02-19T11:49:36Z"
+      },
+      {
+        "title": "PEF file support added",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5921",
+        "updatedAt": "2026-02-17T10:24:46Z"
+      },
+      {
+        "title": "iH structure implemented for wasm files",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5914",
+        "updatedAt": "2026-02-16T08:14:24Z"
+      },
+      {
+        "title": "Added missing relocations in COFF",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/5906",
+        "updatedAt": "2026-02-15T08:32:38Z"
+      },
+      {
+        "title": "iH implementation for dex file",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5903",
+        "updatedAt": "2026-02-15T08:32:37Z"
+      },
+      {
+        "title": "Xbe structure",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5887",
+        "updatedAt": "2026-02-12T16:25:16Z"
+      },
+      {
+        "title": "RZ_PACKED removed from bin_bootimg.c",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5867",
+        "updatedAt": "2026-02-09T09:26:55Z"
+      },
+      {
+        "title": "iH structure for zimg",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5883",
+        "updatedAt": "2026-02-09T09:26:45Z"
+      },
+      {
+        "title": "iH structure for dol",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5877",
+        "updatedAt": "2026-02-06T19:12:15Z"
+      },
+      {
+        "title": "Remove RZ_PACKED from DOL parser",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5831",
+        "updatedAt": "2026-01-25T11:55:30Z"
+      },
+      {
+        "title": "Removed RZ_PACKED",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/5825",
+        "updatedAt": "2026-01-23T10:38:19Z"
+      },
+      {
+        "title": "Minor documentation changes in table help command output.",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5811",
+        "updatedAt": "2026-01-18T08:57:38Z"
+      }
+    ]
+  },
+  "rizinorg-rizin-testbins": {
+    "title": "rizin-testbins",
+    "repoName": "rizinorg/rizin-testbins",
+    "repoUrl": "https://github.com/rizinorg/rizin-testbins",
+    "lang": "Max",
+    "description": "No description available.",
+    "prs": [
+      {
+        "title": "npy & npz files for new npy file format",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin-testbins/pull/256",
+        "updatedAt": "2026-02-17T12:43:28Z"
+      },
+      {
+        "title": "PEF Executables for testing",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin-testbins/pull/253",
+        "updatedAt": "2026-02-14T13:36:01Z"
+      },
+      {
+        "title": "bootimg test file",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin-testbins/pull/248",
+        "updatedAt": "2026-02-03T11:09:48Z"
+      }
+    ]
+  },
+  "rizinorg-book": {
+    "title": "book",
+    "repoName": "rizinorg/book",
+    "repoUrl": "https://github.com/rizinorg/book",
+    "lang": "CSS",
+    "description": "An official book about Rizin",
+    "prs": [
+      {
+        "title": "Global variable chapter added",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/book/pull/162",
+        "updatedAt": "2026-02-06T16:57:00Z"
+      },
+      {
+        "title": "Windows_compilation updated",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/book/pull/163",
+        "updatedAt": "2026-01-28T22:08:44Z"
+      },
+      {
+        "title": "windows docs update and global variable(avg commands) chapter added",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/book/pull/160",
+        "updatedAt": "2026-01-27T12:28:28Z"
+      },
+      {
+        "title": "Table API documentation added",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/book/pull/159",
+        "updatedAt": "2026-01-25T15:59:49Z"
+      },
+      {
+        "title": "Fix duplicate word in commandline_options.md",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/book/pull/158",
+        "updatedAt": "2026-01-16T11:34:15Z"
+      },
+      {
+        "title": "Fix duplicate word in commandline_options.md",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/book/pull/157",
+        "updatedAt": "2026-01-16T11:17:58Z"
+      }
+    ]
+  }
+}

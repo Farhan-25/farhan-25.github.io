@@ -111,31 +111,23 @@ function attachCertModalListeners() {
 
 
 // Open Source Functionality
-const openSourceData = {
-  'project-1': {
-    title: 'Project Name',
-    repoName: 'username/project-name',
-    repoUrl: 'https://github.com/username/project-name',
-    lang: 'Python',
-    description: 'Detailed description of the contribution or project. Explain what was done and the impact.',
-    prs: [
-      { title: 'Fix bug in login flow', status: 'Merged', link: '#' },
-      { title: 'Add new feature for dashboard', status: 'Open', link: '#' }
-    ]
-  },
-  'project-2': {
-    title: 'Cyber Security Tool',
-    repoName: 'username/cyber-security-tool',
-    repoUrl: 'https://github.com/username/cyber-security-tool',
-    lang: 'JavaScript',
-    description: 'A web-based tool for analyzing network traffic and identifying potential security threats.',
-    prs: [
-      { title: 'Initial commit', status: 'Merged', link: '#' },
-      { title: 'Add packet analysis feature', status: 'Merged', link: '#' },
-      { title: 'Implement real-time monitoring', status: 'Open', link: '#' }
-    ]
+let openSourceData = {};
+
+async function loadOpenSourceData() {
+  if (Object.keys(openSourceData).length > 0) {
+    return openSourceData;
   }
-};
+  try {
+    // Use a timestamp to prevent caching and ensure fresh data
+    const response = await fetch('opensource_data.json?t=' + new Date().getTime());
+    if (!response.ok) throw new Error('Failed to load open source data');
+    openSourceData = await response.json();
+    return openSourceData;
+  } catch (error) {
+    console.error('Error loading open source data:', error);
+    return {};
+  }
+}
 
 function renderOpenSourceList() {
   const grid = document.getElementById('opensource-grid');
@@ -219,7 +211,8 @@ function showOpenSourceList() {
   if (detailView) detailView.style.display = 'none';
 }
 
-function handleOpenSourceRoute() {
+async function handleOpenSourceRoute() {
+  await loadOpenSourceData();
   const hash = window.location.hash.substring(1);
   if (hash.startsWith('opensource/')) {
     const projectKey = hash.split('/')[1];
@@ -233,7 +226,8 @@ function handleOpenSourceRoute() {
   }
 }
 
-function attachOpenSourceListeners() {
+async function attachOpenSourceListeners() {
+  await loadOpenSourceData();
   renderOpenSourceList();
   
   const backBtn = document.getElementById('opensource-back-btn');
