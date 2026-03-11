@@ -55,6 +55,10 @@ async function loadNavbar() {
 
 // Certificate Modal Functionality (About Page)
 const certData = {
+  'iit-madras': {
+    title: 'IIT Madras Certificate',
+    src: 'Certificates/IIT Madras BS-DS.pdf'
+  },
   'thm-pre-security': {
     title: 'TryHackMe Pre Security Certificate',
     src: 'Certificates/THM-Pre Security.pdf'
