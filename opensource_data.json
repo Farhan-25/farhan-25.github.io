@@ -7,16 +7,46 @@
     "description": "UNIX-like reverse engineering framework and command-line toolset.",
     "prs": [
       {
-        "title": "Test for read_*_leb128 functions",
+        "title": "Broken tests fix in /formats, /rzil & /io",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/6010",
+        "updatedAt": "2026-03-09T09:24:35Z"
+      },
+      {
+        "title": "Broken test fix in test/db/formats/elf",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/6004",
+        "updatedAt": "2026-03-09T04:29:53Z"
+      },
+      {
+        "title": "blake2 hash support",
         "status": "Merged",
-        "link": "https://github.com/rizinorg/rizin/pull/5931",
-        "updatedAt": "2026-02-19T20:25:00Z"
+        "link": "https://github.com/rizinorg/rizin/pull/5995",
+        "updatedAt": "2026-03-06T14:25:49Z"
+      },
+      {
+        "title": "Blake2 hash support",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/5978",
+        "updatedAt": "2026-03-04T10:31:38Z"
       },
       {
         "title": "Parse numpy NPY files",
         "status": "Open",
         "link": "https://github.com/rizinorg/rizin/pull/5944",
-        "updatedAt": "2026-02-19T11:49:36Z"
+        "updatedAt": "2026-02-23T16:17:55Z"
+      },
+      {
+        "title": "Fixed izx missing strings",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5950",
+        "updatedAt": "2026-02-23T12:40:27Z"
+      },
+      {
+        "title": "Test for read_*_leb128 functions",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/5931",
+        "updatedAt": "2026-02-23T12:40:25Z"
       },
       {
         "title": "PEF file support added",
@@ -94,6 +124,12 @@
     "description": "No description available.",
     "prs": [
       {
+        "title": "Test file for updated `izx` command output",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin-testbins/pull/259",
+        "updatedAt": "2026-02-22T11:09:44Z"
+      },
+      {
         "title": "npy & npz files for new npy file format",
         "status": "Merged",
         "link": "https://github.com/rizinorg/rizin-testbins/pull/256",
@@ -121,6 +157,12 @@
     "description": "An official book about Rizin",
     "prs": [
       {
+        "title": "Table Commands documentation added",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/book/pull/159",
+        "updatedAt": "2026-03-04T15:37:14Z"
+      },
+      {
         "title": "Global variable chapter added",
         "status": "Open",
         "link": "https://github.com/rizinorg/book/pull/162",
@@ -137,12 +179,6 @@
         "status": "Closed",
         "link": "https://github.com/rizinorg/book/pull/160",
         "updatedAt": "2026-01-27T12:28:28Z"
-      },
-      {
-        "title": "Table API documentation added",
-        "status": "Open",
-        "link": "https://github.com/rizinorg/book/pull/159",
-        "updatedAt": "2026-01-25T15:59:49Z"
       },
       {
         "title": "Fix duplicate word in commandline_options.md",
