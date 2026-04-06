@@ -7,6 +7,66 @@
     "description": "UNIX-like reverse engineering framework and command-line toolset.",
     "prs": [
       {
+        "title": "Pool allocation for RzList",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/rizin/pull/6129",
+        "updatedAt": "2026-04-05T09:05:46Z"
+      },
+      {
+        "title": "Add a note regarding verbose mode in benchmark",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6157",
+        "updatedAt": "2026-04-05T00:20:15Z"
+      },
+      {
+        "title": "RzList Speedup (Implementing small fixes)",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/6154",
+        "updatedAt": "2026-04-04T16:34:27Z"
+      },
+      {
+        "title": "Parse numpy NPY files",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/5944",
+        "updatedAt": "2026-04-04T15:24:38Z"
+      },
+      {
+        "title": "Test optimization of db/formats/elf",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/rizin/pull/6113",
+        "updatedAt": "2026-04-03T16:41:18Z"
+      },
+      {
+        "title": "db/tools test fixes",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/rizin/pull/6086",
+        "updatedAt": "2026-03-29T17:21:26Z"
+      },
+      {
+        "title": "Rzlist speedup",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/6120",
+        "updatedAt": "2026-03-29T16:13:05Z"
+      },
+      {
+        "title": "Optimize tests for db/formats",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/rizin/pull/6051",
+        "updatedAt": "2026-03-28T13:21:46Z"
+      },
+      {
+        "title": "Test optimization of db/abi/compilers",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6082",
+        "updatedAt": "2026-03-27T13:07:28Z"
+      },
+      {
+        "title": "Fix for ic* and pf* by a alternate commands ica and pfa",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6039",
+        "updatedAt": "2026-03-17T17:11:14Z"
+      },
+      {
         "title": "Broken tests fix in /formats, /rzil & /io",
         "status": "Closed",
         "link": "https://github.com/rizinorg/rizin/pull/6010",
@@ -29,12 +89,6 @@
         "status": "Closed",
         "link": "https://github.com/rizinorg/rizin/pull/5978",
         "updatedAt": "2026-03-04T10:31:38Z"
-      },
-      {
-        "title": "Parse numpy NPY files",
-        "status": "Open",
-        "link": "https://github.com/rizinorg/rizin/pull/5944",
-        "updatedAt": "2026-02-23T16:17:55Z"
       },
       {
         "title": "Fixed izx missing strings",
@@ -157,16 +211,16 @@
     "description": "An official book about Rizin",
     "prs": [
       {
+        "title": "Global variable chapter added",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/book/pull/162",
+        "updatedAt": "2026-03-27T16:10:54Z"
+      },
+      {
         "title": "Table Commands documentation added",
         "status": "Merged",
         "link": "https://github.com/rizinorg/book/pull/159",
         "updatedAt": "2026-03-04T15:37:14Z"
-      },
-      {
-        "title": "Global variable chapter added",
-        "status": "Open",
-        "link": "https://github.com/rizinorg/book/pull/162",
-        "updatedAt": "2026-02-06T16:57:00Z"
       },
       {
         "title": "Windows_compilation updated",
