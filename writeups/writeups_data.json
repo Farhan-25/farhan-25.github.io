@@ -1,0 +1,22 @@
+{
+  "writeups": [
+    {
+      "name": "Year of the Rabbit",
+      "slug": "year-of-the-rabbit",
+      "path": "writeups/thm/year_of_the_rabbit.md",
+      "platform": "TryHackMe",
+      "difficulty": "Easy",
+      "tags": ["Web", "FTP", "Brainfuck", "Sudo PrivEsc"],
+      "description": "A fun TryHackMe machine involving directory fuzzing, FTP brute-forcing, decoding Brainfuck credentials, and exploiting a sudo vulnerability to escalate privileges."
+    },
+    {
+      "name": "XOR Decryption Walkthrough",
+      "slug": "xor-decryption-walkthrough",
+      "path": "writeups/thm/README_XOR.md",
+      "platform": "TryHackMe",
+      "difficulty": "Easy",
+      "tags": ["Cryptography", "XOR", "Python", "Known-Plaintext"],
+      "description": "Step-by-step walkthrough explaining a known-plaintext attack against a repeating-key XOR encryption challenge to retrieve the flag."
+    }
+  ]
+}

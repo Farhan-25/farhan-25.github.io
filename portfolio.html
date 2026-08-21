@@ -27,20 +27,30 @@
         <section class="portfolio-content">
           <div class="portfolio-intro">
             <p>
-              Welcome to my portfolio! Here you can preview and download my resume.
+              Welcome to my portfolio! Here you can view my live resume directly synced with Overleaf, preview the document, or download a local copy.
             </p>
           </div>
 
           <div class="resume-viewer">
             <div class="viewer-controls">
               <div class="viewer-info">
-                <h4>Resume Preview</h4>
-                <p>View my professional resume below</p>
+                <div class="viewer-title-row">
+                  <h4>Curriculum Vitae</h4>
+                  <span class="live-status-pill">
+                    <span class="live-pulse-dot"></span>
+                    Live Sync (Overleaf)
+                  </span>
+                </div>
+                <p>Real-time compiled version always up to date</p>
               </div>
               <div class="download-controls">
-                <a href="Resume.pdf" download class="download-btn">
+                <a href="https://www.overleaf.com/read/bgwjthpmcpts#4ef6c7" target="_blank" rel="noopener noreferrer" class="live-overleaf-btn" title="View Real-Time Live Feed on Overleaf">
+                  <ion-icon name="open-outline"></ion-icon>
+                  <span>Open Live on Overleaf</span>
+                </a>
+                <a href="Resume.pdf" download class="download-btn" title="Download Offline Copy">
                   <ion-icon name="download-outline"></ion-icon>
-                  Download PDF
+                  <span>Download PDF</span>
                 </a>
               </div>
             </div>
@@ -51,11 +61,15 @@
                   <div class="preview-placeholder">
                     <ion-icon name="document-outline"></ion-icon>
                     <h3>Resume Preview</h3>
-                    <p>Your browser doesn't support PDF preview directly.</p>
+                    <p>Your browser doesn't support direct PDF embedding.</p>
                     <div class="preview-actions">
+                      <a href="https://www.overleaf.com/read/bgwjthpmcpts#4ef6c7" target="_blank" rel="noopener noreferrer" class="live-overleaf-btn">
+                        <ion-icon name="open-outline"></ion-icon>
+                        <span>Open Live on Overleaf</span>
+                      </a>
                       <a href="Resume.pdf" target="_blank" class="preview-btn">
                         <ion-icon name="open-outline"></ion-icon>
-                        Open PDF in New Tab
+                        <span>Open PDF in New Tab</span>
                       </a>
                     </div>
                   </div>
@@ -69,7 +83,7 @@
       </article>
     </div>
   </main>
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

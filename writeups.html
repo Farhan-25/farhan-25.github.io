@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - CTF Writeups</title>
+  <link rel="shortcut icon" href="https://via.placeholder.com/32x32/333333/ffffff?text=F" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Markdown Renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<body>
+  <main>
+    <div id="sidebar-container"></div>
+    <div class="main-content">
+      <div id="navbar-container"></div>
+      <article class="writeups active" data-page="writeups">
+
+        <header>
+          <h2 class="h2 article-title">CTF Writeups</h2>
+        </header>
+
+        <!-- List View -->
+        <section class="writeup-content" id="writeups-list-view">
+          <div class="writeup-intro">
+            <p>Welcome to my CTF writeups archive! Here you can explore detailed walkthroughs, vulnerability analyses, and exploit scripts from various platforms and challenges.</p>
+          </div>
+
+          <!-- Search and Filter Bar -->
+          <div class="writeup-search-container">
+            <div class="writeup-search-wrapper">
+              <ion-icon name="search-outline"></ion-icon>
+              <input type="text" id="writeupSearch" class="writeup-search-input" placeholder="Search writeups by name, tag, platform or concept...">
+            </div>
+
+            <div class="writeup-filter-list">
+              <button class="writeup-filter-btn active" data-filter="all">All</button>
+              <button class="writeup-filter-btn" data-filter="TryHackMe">TryHackMe</button>
+            </div>
+          </div>
+          
+          <!-- Writeups Grid -->
+          <div class="writeups-grid" id="writeups-grid">
+            <!-- Dynamically populated by script.js -->
+          </div>
+        </section>
+
+        <!-- Detail View -->
+        <section class="writeup-detail" id="writeup-detail-view" style="display: none;">
+          <button class="back-btn" id="writeup-back-btn">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <span>Back to Writeups</span>
+          </button>
+          
+          <div class="writeup-detail-header-card" id="writeup-detail-header">
+            <h2 class="writeup-detail-title" id="writeup-detail-title">Writeup Title</h2>
+            <div class="writeup-detail-meta">
+              <span class="writeup-card-platform">
+                <ion-icon name="flag-outline"></ion-icon>
+                <span id="writeup-detail-platform">TryHackMe</span>
+              </span>
+              <span class="writeup-difficulty-badge easy" id="writeup-detail-difficulty">Easy</span>
+              <div class="writeup-tags-list" id="writeup-detail-tags">
+                <!-- Tags populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <div id="markdown-content" class="writeup-text">
+            <!-- Rendered Markdown Article -->
+          </div>
+        </section>
+
+      </article>
+    </div>
+  </main>
+
+  <script src="script.js?v=2"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

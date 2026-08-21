@@ -7,10 +7,100 @@
     "description": "UNIX-like reverse engineering framework and command-line toolset.",
     "prs": [
       {
+        "title": "Fix x-axis address overflow",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6563",
+        "updatedAt": "2026-07-24T09:50:10Z"
+      },
+      {
+        "title": "Update rz_config list variables to set variables",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6623",
+        "updatedAt": "2026-07-24T09:49:50Z"
+      },
+      {
+        "title": "Update unicode version to 17.0.0",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6595",
+        "updatedAt": "2026-07-19T09:54:12Z"
+      },
+      {
+        "title": "Add pgup pgdown scrolling in histogram",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6535",
+        "updatedAt": "2026-07-15T15:05:19Z"
+      },
+      {
+        "title": "Fix for truncated strings output in rz-find",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/6294",
+        "updatedAt": "2026-07-15T10:36:07Z"
+      },
+      {
+        "title": "Update cconfig.c to make =? behave like =??",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6546",
+        "updatedAt": "2026-07-15T10:36:05Z"
+      },
+      {
+        "title": "R! help, documentation fix",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6528",
+        "updatedAt": "2026-06-19T13:48:41Z"
+      },
+      {
+        "title": "Pool Node allocation",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6203",
+        "updatedAt": "2026-05-08T10:17:57Z"
+      },
+      {
+        "title": "Disable codecov/patch on dev and stable branches",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/6293",
+        "updatedAt": "2026-04-28T16:18:41Z"
+      },
+      {
+        "title": "Optimize tests for db/formats",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6051",
+        "updatedAt": "2026-04-25T08:33:25Z"
+      },
+      {
+        "title": "db/tools test fixes",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6086",
+        "updatedAt": "2026-04-23T16:54:13Z"
+      },
+      {
+        "title": "rz_list_purge speedup",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6179",
+        "updatedAt": "2026-04-10T14:23:56Z"
+      },
+      {
+        "title": "RzList Speedup (Implementing small fixes)",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/rizin/pull/6154",
+        "updatedAt": "2026-04-10T14:23:54Z"
+      },
+      {
         "title": "Pool allocation for RzList",
-        "status": "Open",
+        "status": "Closed",
         "link": "https://github.com/rizinorg/rizin/pull/6129",
-        "updatedAt": "2026-04-05T09:05:46Z"
+        "updatedAt": "2026-04-10T14:23:53Z"
+      },
+      {
+        "title": "Fix for broken CI caused by #6188",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6193",
+        "updatedAt": "2026-04-10T03:47:49Z"
+      },
+      {
+        "title": "Test optimization of db/formats/elf",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/rizin/pull/6113",
+        "updatedAt": "2026-04-08T09:28:16Z"
       },
       {
         "title": "Add a note regarding verbose mode in benchmark",
@@ -19,40 +109,16 @@
         "updatedAt": "2026-04-05T00:20:15Z"
       },
       {
-        "title": "RzList Speedup (Implementing small fixes)",
-        "status": "Closed",
-        "link": "https://github.com/rizinorg/rizin/pull/6154",
-        "updatedAt": "2026-04-04T16:34:27Z"
-      },
-      {
         "title": "Parse numpy NPY files",
         "status": "Closed",
         "link": "https://github.com/rizinorg/rizin/pull/5944",
         "updatedAt": "2026-04-04T15:24:38Z"
       },
       {
-        "title": "Test optimization of db/formats/elf",
-        "status": "Open",
-        "link": "https://github.com/rizinorg/rizin/pull/6113",
-        "updatedAt": "2026-04-03T16:41:18Z"
-      },
-      {
-        "title": "db/tools test fixes",
-        "status": "Open",
-        "link": "https://github.com/rizinorg/rizin/pull/6086",
-        "updatedAt": "2026-03-29T17:21:26Z"
-      },
-      {
         "title": "Rzlist speedup",
         "status": "Closed",
         "link": "https://github.com/rizinorg/rizin/pull/6120",
         "updatedAt": "2026-03-29T16:13:05Z"
-      },
-      {
-        "title": "Optimize tests for db/formats",
-        "status": "Open",
-        "link": "https://github.com/rizinorg/rizin/pull/6051",
-        "updatedAt": "2026-03-28T13:21:46Z"
       },
       {
         "title": "Test optimization of db/abi/compilers",
@@ -170,6 +236,57 @@
       }
     ]
   },
+  "rizinorg-book": {
+    "title": "book",
+    "repoName": "rizinorg/book",
+    "repoUrl": "https://github.com/rizinorg/book",
+    "lang": "CSS",
+    "description": "An official book about Rizin",
+    "prs": [
+      {
+        "title": "Update Remote access codes and help manual",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/book/pull/166",
+        "updatedAt": "2026-06-21T13:16:47Z"
+      },
+      {
+        "title": "Global variable chapter added",
+        "status": "Open",
+        "link": "https://github.com/rizinorg/book/pull/162",
+        "updatedAt": "2026-05-12T11:03:04Z"
+      },
+      {
+        "title": "Table Commands documentation added",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/book/pull/159",
+        "updatedAt": "2026-04-06T18:00:07Z"
+      },
+      {
+        "title": "Windows_compilation updated",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/book/pull/163",
+        "updatedAt": "2026-01-28T22:08:44Z"
+      },
+      {
+        "title": "windows docs update and global variable(avg commands) chapter added",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/book/pull/160",
+        "updatedAt": "2026-01-27T12:28:28Z"
+      },
+      {
+        "title": "Fix duplicate word in commandline_options.md",
+        "status": "Merged",
+        "link": "https://github.com/rizinorg/book/pull/158",
+        "updatedAt": "2026-01-16T11:34:15Z"
+      },
+      {
+        "title": "Fix duplicate word in commandline_options.md",
+        "status": "Closed",
+        "link": "https://github.com/rizinorg/book/pull/157",
+        "updatedAt": "2026-01-16T11:17:58Z"
+      }
+    ]
+  },
   "rizinorg-rizin-testbins": {
     "title": "rizin-testbins",
     "repoName": "rizinorg/rizin-testbins",
@@ -200,51 +317,6 @@
         "status": "Merged",
         "link": "https://github.com/rizinorg/rizin-testbins/pull/248",
         "updatedAt": "2026-02-03T11:09:48Z"
-      }
-    ]
-  },
-  "rizinorg-book": {
-    "title": "book",
-    "repoName": "rizinorg/book",
-    "repoUrl": "https://github.com/rizinorg/book",
-    "lang": "CSS",
-    "description": "An official book about Rizin",
-    "prs": [
-      {
-        "title": "Global variable chapter added",
-        "status": "Open",
-        "link": "https://github.com/rizinorg/book/pull/162",
-        "updatedAt": "2026-03-27T16:10:54Z"
-      },
-      {
-        "title": "Table Commands documentation added",
-        "status": "Merged",
-        "link": "https://github.com/rizinorg/book/pull/159",
-        "updatedAt": "2026-03-04T15:37:14Z"
-      },
-      {
-        "title": "Windows_compilation updated",
-        "status": "Merged",
-        "link": "https://github.com/rizinorg/book/pull/163",
-        "updatedAt": "2026-01-28T22:08:44Z"
-      },
-      {
-        "title": "windows docs update and global variable(avg commands) chapter added",
-        "status": "Closed",
-        "link": "https://github.com/rizinorg/book/pull/160",
-        "updatedAt": "2026-01-27T12:28:28Z"
-      },
-      {
-        "title": "Fix duplicate word in commandline_options.md",
-        "status": "Merged",
-        "link": "https://github.com/rizinorg/book/pull/158",
-        "updatedAt": "2026-01-16T11:34:15Z"
-      },
-      {
-        "title": "Fix duplicate word in commandline_options.md",
-        "status": "Closed",
-        "link": "https://github.com/rizinorg/book/pull/157",
-        "updatedAt": "2026-01-16T11:17:58Z"
       }
     ]
   }
