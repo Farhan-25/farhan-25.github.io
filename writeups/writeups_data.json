@@ -17,6 +17,15 @@
       "difficulty": "Easy",
       "tags": ["Cryptography", "XOR", "Python", "Known-Plaintext"],
       "description": "Step-by-step walkthrough explaining a known-plaintext attack against a repeating-key XOR encryption challenge to retrieve the flag."
+    },
+    {
+      "name": "Bounty Hacker",
+      "slug": "bounty-hacker",
+      "path": "writeups/thm/bounty_hacker.md",
+      "platform": "TryHackMe",
+      "difficulty": "Easy",
+      "tags": ["FTP", "Hydra", "SSH", "GTFOBins", "Tar Sudo PrivEsc"],
+      "description": "Beginner-friendly walkthrough covering Anonymous FTP enumeration, Hydra SSH brute-forcing, and GTFOBins tar checkpoint privilege escalation."
     }
   ]
 }

